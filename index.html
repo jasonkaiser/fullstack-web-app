@@ -1,13 +1,35 @@
+<!DOCTYPE html>
+
 <html>
     <head>
-        <title>test</title>
-        <body>
-            testa
-            dsa
-            asd
-            <p>test</p>
-            <h2>TEST</h2>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Lost & Found Web App</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        </body>
+        <link rel="stylesheet" href="frontend/assets/styles/global.css">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Montserrat:wght@400;600&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
     </head>
+    <body>
+
+        <nav class="nav-container" id="navbar">
+            <h1 class="nav-logo">LF LOGO</h1>
+            <ul class="nav-links">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#report">Report</a></li>
+                <li><a href="#categories">Categories</a></li>
+                <li><a href="#nearbyitems">Nearby Items</a></li>
+                <li><a href="#profile">Profile</a></li>
+                <li><a href="#admin">Admin</a></li>
+            </ul>
+        </nav>
+
+        <div class="app-container" id="app"></div>
+
+        
+        <script src="frontend/assets/js/app.js" async defer></script>
+        <script src="frontend/assets/js/router.js" async defer></script>
+    </body>
 </html>
