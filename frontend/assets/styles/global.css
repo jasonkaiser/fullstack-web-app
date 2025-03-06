@@ -1,3 +1,15 @@
+:root {
+
+    --primary-color: #0077B6;
+    --secondary-color: #00B4D8;
+    --background-color: #F8F9FA;
+    --text-color: #333333;
+    --error-color: #D72638;
+    --card-color: #FFFFFF; 
+}
+
+
+
 *{
     margin: 0;
     padding: 0;
@@ -9,10 +21,16 @@ a {
     color: inherit; 
 }
 
+h1{
+    font-family: 'Poppins', 'sans-serif';
+    color: var(--primary-color);
+    font-size: 2.6rem;
+    margin-bottom: 1em;
+}
 
 body{
 
-    background-color: #F8F9FA;
+    background-color: var(--background-color);
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -24,22 +42,30 @@ p{
     font-family: 'Inter', sans-serif;
 }
 
-
-
+hr{
+    border: none;
+    height: 1px;
+    background-color: #cacaca;
+    margin-bottom: 2em;
+}
 
 .nav-container{
     display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 95%;
     margin: auto;
-    align-items: center;
     margin-top: 1em;
+   
+    
 }
 
 .nav-logo{
-    color: #0077B6;
+    color: var(--primary-color);
     font-size: 2.6rem;
     font-weight: bolder;
+    margin: 0;
+    
 }
 
 .nav-links{
@@ -54,6 +80,96 @@ a {
     color: #333333;
 }
 
+a:hover{
+    color: var(--secondary-color);
+    transition: 0.3s ease-in-out;
+}
+
+button:hover{
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    transition: 0.3s ease-in-out;
+}
+
 .active{
     color: #0077B6;
 }
+
+
+.active:hover{
+    color: #0077B6;
+}
+
+i{
+    margin:0;
+    padding: 0;
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 5px;
+}
+
+.hamburger span {
+    display: block;
+    width: 30px;
+    height: 4px;
+    background: black;
+    border-radius: 2px;
+}
+
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        background: white;
+        width: 50%;
+        padding: 1em;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        background-color: var(--background-color);
+    }
+
+    .nav-links.open {
+        display: flex;
+        width: 100%;
+        text-align: center;
+        font-size: 1.6rem;
+        margin-top: 0;
+        gap: 1em;
+        box-shadow: none;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+    .nav-logo {
+        font-size: 2.2rem;
+    }
+}
+
+@media (max-width: 1550px){
+
+    .nav-links{
+ 
+        width: 60%;
+        
+        
+    }
+}
+
+@media (max-width: 880px){
+
+    .nav-links{
+ 
+        width: 70%;
+        
+        
+    }
+}
+
