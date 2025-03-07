@@ -1,5 +1,63 @@
 <div id="report-page">
     
-    <h1>Report a Lost/Found Item</h1>
+    <div class="report-container container my-5">
+        <h2 class="report-header text-center mb-4">Report Form</h2>
+    
+        <form action="#" method="POST">
+  
+            <div class="mb-3">
+                <label for="reportType" class="form-label">Report Type</label>
+                <select class="form-select" id="reportType" name="reportType" required>
+                    <option value="" selected disabled>Select Report Type</option>
+                    <option value="lost">Lost</option>
+                    <option value="found">Found</option>
+                </select>
+            </div>
+    
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" class="form-control" id="title" name="title" required>
+            </div>
+    
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+            </div>
+    
+            <div class="mb-3">
+                <label for="category" class="form-label">Category</label>
+                <select class="form-select" id="category" name="category" required>
+                    <option value="" selected disabled>Select Category</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="pets">Pets</option>
+                    <option value="documents">Documents</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+    
+
+            <div class="mb-3">
+                <label for="location" class="form-label">Location</label>
+                <input type="text" class="form-control" id="location" name="location" required>
+            </div>
+    
+            <div class="mb-3">
+                <label for="date" class="form-label">Date</label>
+                <input type="date" class="form-control" id="date" name="date" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="image" class="form-label">Upload Image (Optional)</label>
+                <div class="drag-drop-area" id="dragDropArea">
+                    <p>Drag & Drop an Image Here or Click to Browse</p>
+                    <input type="file" class="d-none" id="image" name="image" accept="image/*">
+                </div>
+                <img id="previewImage" class="preview-image d-none" alt="Image Preview">
+            </div>
+    
+
+            <button type="submit" class="btn btn-primary w-100">Submit Report</button>
+        </form>
+    </div>
 
 </div>
