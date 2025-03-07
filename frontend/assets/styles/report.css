@@ -1,0 +1,36 @@
+.report-container{
+    width: 60%;
+}
+
+.report-header{
+    font-family: 'Poppins', 'sans-serif';
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.form-label{
+    font-weight: bold;
+}
+
+.drag-drop-area {
+    border: 2px dashed #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+}
+.drag-drop-area.dragover {
+    background-color: #f8f9fa;
+    border-color: #007bff;
+}
+.drag-drop-area p {
+    margin: 0;
+    font-size: 1rem;
+}
+.preview-image {
+    margin-top: 10px;
+    max-width: 100%;
+    max-height: 200px;
+}
+
+
