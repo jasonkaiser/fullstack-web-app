@@ -18,11 +18,11 @@
 
     </head>
     <body>
-
+        
         <nav class="nav-container">
             <h1 class="nav-logo">LF LOGO</h1>
-            
-            <div class="hamburger" onclick="toggleMenu()">
+        
+            <div class="hamburger">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -31,7 +31,19 @@
             <ul class="nav-links">
                 <li><a href="#home" class="active">Home</a></li>
                 <li><a href="#report">Report</a></li>
-                <li><a href="#categories">Categories</a></li>
+        
+              
+                <li class="dropdown">
+                    <a href="#categories" class="dropbtn">Categories ▾</a>
+                    <ul class="dropdown-content">
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-mobile-alt"></i> Electronics</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-tshirt"></i> Clothing</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-glasses"></i> Accessories</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-file-alt"></i> Documents</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-box"></i> Others</a></li>
+                    </ul>
+                </li>
+        
                 <li><a href="#nearbyitems">Nearby Items</a></li>
                 <li><a href="#profile">Profile</a></li>
                 <li><a href="#admin">Admin</a></li>
@@ -44,8 +56,9 @@
           
 
         
-        <script src="frontend/assets/js/app.js" async defer></script>
-        <script src="frontend/assets/js/router.js" async defer></script>
+        <script type="module" src="frontend/assets/js/app.js" defer></script>
+
+    
         
     </body>
 </html>

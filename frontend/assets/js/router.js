@@ -1,4 +1,4 @@
-const routes = {
+export const routes = {
 
     'home' : 'home.html',
     'report' : 'report.html',
