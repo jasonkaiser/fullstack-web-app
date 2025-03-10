@@ -10,6 +10,8 @@
 
 
 
+
+
 *{
     margin: 0;
     padding: 0;
@@ -121,15 +123,15 @@ button:hover {
 .dropdown-content {
     display: none;
     position: absolute;
-    top: 100%; /* Ensures it appears right below */
-    left: 50%; /* Moves it to the center */
-    transform: translateX(-50%); /* Centers it properly */
+    top: 100%; 
+    left: 50%; 
+    transform: translateX(-50%); 
     background: var(--card-color);
     min-width: 180px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 5px;
     z-index: 1000;
-    padding: 0; /* Removes extra padding */
+    padding: 0; 
     text-align: left;
 
 }
