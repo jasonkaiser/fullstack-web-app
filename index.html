@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="frontend/assets/styles/global.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Montserrat:wght@400;600&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-        
+        <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
 
 
@@ -19,7 +19,7 @@
     </head>
     <body>
         
-        <nav class="nav-container">
+        <nav class="nav-container" data-aos="fade-down" data-aos-duration="1200">
             <h1 class="nav-logo">LF LOGO</h1>
         
             <div class="hamburger">
@@ -36,17 +36,21 @@
                 <li class="dropdown">
                     <a href="#categories" class="dropbtn">Categories ▾</a>
                     <ul class="dropdown-content">
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-mobile-alt"></i> Electronics</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-tshirt"></i> Clothing</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-glasses"></i> Accessories</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-file-alt"></i> Documents</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-box"></i> Others</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-mobile"></i> Electronics</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-wallet"></i> Wallets</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-shirt"></i> Clothing</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-key"></i> Keys</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-file"></i> Documents</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-dog"></i> Pets</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-ring"></i> Jewelry</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-gamepad"></i> Toys</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-angles-right"></i> Others</a></li>
                     </ul>
                 </li>
         
                 <li><a href="#nearbyitems">Nearby Items</a></li>
                 <li><a href="#profile">Profile</a></li>
-                <li><a href="#admin">Admin</a></li>
+                <li><a href="#admin" >Admin</a></li>
             </ul>
         </nav>
         
@@ -57,8 +61,11 @@
 
         
         <script type="module" src="frontend/assets/js/app.js" defer></script>
-
-    
+        <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+        <script>
+          AOS.init();
+        </script>
+  
         
     </body>
 </html>
