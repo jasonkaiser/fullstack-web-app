@@ -78,6 +78,8 @@ window.addEventListener('hashchange', () => {
     loadPage(route)
 })
 
+
+
 loadSPA();
 
 
