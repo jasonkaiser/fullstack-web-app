@@ -5,5 +5,6 @@ export const routes = {
     'profile' : 'profile.html',
     'admin' : 'admin.html',
     'login' : 'login.html',
-    'register' : 'register.html'
+    'register' : 'register.html',
+    'item' : 'item.html'
 }

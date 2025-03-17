@@ -39,4 +39,10 @@
     max-height: 200px;
 }
 
+@media (max-width: 768px) {
+    .report-container{
+        width: 90%;
+    }
+}
+
 
