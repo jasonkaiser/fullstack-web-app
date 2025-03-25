@@ -48,50 +48,81 @@ class BaseDao{
     public function add($entity)
     {
 
-        $query = "INSERT INTO " . $this->table_name . " (" ;
+        $query = "INSERT INTO " . $this->table_name . " (";
         foreach ($entity as $column => $value) {
             $query .= $column . ', ';
         }
-
-        $query = substr($query, 0, -2);
+    
+        $query = substr($query, 0, -2);  
         $query .= ") VALUES (";
+        
+     
         foreach ($entity as $column => $value) {
             $query .= ":" . $column . ', ';
         }
-        $query = substr($query, 0, -2);
+        $query = substr($query, 0, -2);  
         $query .= ")";
-
+    
         $stmt = $this->connection->prepare($query);
-        $stmt = $this->execute($entity);
-        $entity['id'] = $this->connection->lastInsertId();
-        return $entity;
+        foreach ($entity as $column => $value) {
+            $stmt->bindValue(':' . $column, $value);
+        }
+    
 
+        if ($stmt->execute()) {
+
+            $entity['id'] = $this->connection->lastInsertId();
+            return $entity; 
+        } else {
+      
+            throw new Exception("Failed to insert entity into database.");
+        }
     }
+    
 
-    public function update($entity, $id, $id_column ='id')
+    public function update($entity, $id, $id_column = 'id')
     {
+        
         $query = "UPDATE " . $this->table_name . " SET ";
 
         foreach ($entity as $column => $value) {
-            $query .= $column . "=:" . $column . ", ";
-
+            if ($column != $id_column) {  
+                $query .= $column . "=:" . $column . ", ";
+            }
         }
+
+    
         $query = substr($query, 0, -2);
         $query .= " WHERE " . $id_column . " = :id";
         $stmt = $this->connection->prepare($query);
+
         $entity['id'] = $id;
-        $stmt->execute($entity);
-        return $entity;
+   
+
+        if ($stmt->execute($entity)) {
+            return $entity;  
+        } else {
+        
+            throw new Exception("Failed to update entity.");
+        }
     }
 
-    public function delete($id){
-
-        $query = "DELETE FROM " .$this->table_name . " WHERE id = :id";
+    public function delete($id)
+    {
+    
+        $query = "DELETE FROM " . $this->table_name . " WHERE id = :id";
         $stmt = $this->connection->prepare($query);
         $stmt->bindValue(":id", $id);
-        $stmt->execute();
 
+
+        if ($stmt->execute()) {
+            return true;  
+        } else {
+    
+            throw new Exception("Failed to delete entity.");
+        }
     }
+
 
     public function getById($id){
 

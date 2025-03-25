@@ -23,7 +23,7 @@ class Config{
     }
 
     public static function DB_PORT(){
-        return 3308;
+        return 3306;
     }
     
     

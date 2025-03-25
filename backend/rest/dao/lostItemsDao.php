@@ -37,7 +37,7 @@
             return $this->query($query, $params);
         }
 
-        public function getAllItems(){
+        public function getLostItems(){
             $query = "SELECT * FROM ". $this->table_name;
             return $this->query($query, []);
         

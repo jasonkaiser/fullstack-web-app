@@ -17,22 +17,30 @@
 
         public function getItemByCategory($category_id){
 
+            $query = "SELECT * FROM " . $this->table_name . " WHERE categoryID = :categoryID";
+            $params = [":categoryID" => $category_id];
+            return $this->query($query, $params);
         }
 
-        public function getItemByStatus($status){
-
-        }
-
+   
         public function getItemByName($name){
-
+            
+            $query = "SELECT * FROM " . $this->table_name . " WHERE itemName = :itemName";
+            $params = [":itemName" => $name];
+            return $this->query($query, $params);
         }
 
         public function getItemByUser($user_id){
 
+            $query = "SELECT * FROM " . $this->table_name . " WHERE userID = :userID";
+            $params = [":userID" => $user_id];
+            return $this->query($query, $params);
         }
 
-        public function getAllItems(){
-
+        public function getFoundItems(){
+            $query = "SELECT * FROM ". $this->table_name;
+            return $this->query($query, []);
+        
         }
 
 
