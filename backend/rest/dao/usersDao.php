@@ -20,14 +20,13 @@ class User extends BaseDao {
         return $this->query($query, []);
     }
 
-    public function getUserByEmail($email){
+    public function getUserByEmail($email) {
+        
         $query = "SELECT * FROM " . $this->table_name . " WHERE email = :email";
-        $stmt = $this->connection->prepare($query);
-        $stmt->bindValue(":email", $email, PDO::PARAM_STR);
-        $stmt->execute();
-
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $params = [':email' => $email];  
+        return $this->query($query, $params);  
     }
+    
 }
 
 ?>
