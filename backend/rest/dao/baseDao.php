@@ -5,7 +5,7 @@ require_once __DIR__ . "/../config.php";
 class BaseDao{
 
     protected $connection;
-    private $table_name;
+    protected $table_name;
 
     public function __construct($table_name){
 
@@ -86,12 +86,22 @@ class BaseDao{
 
     public function delete($id){
 
-        $query = "DELETE FROM " .this->table_name . " WHERE id = :id";
+        $query = "DELETE FROM " .$this->table_name . " WHERE id = :id";
+        $stmt = $this->connection->prepare($query);
         $stmt->bindValue(":id", $id);
         $stmt->execute();
 
     }
 
+    public function getById($id){
+
+        $query = "SELECT * FROM ". $this->table_name . " WHERE id = :id";
+        $stmt = $this->connection->prepare($query);
+        $stmt->bindValue(":id", $id);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_OBJ);
+    }
 
 }
 

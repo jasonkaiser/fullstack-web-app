@@ -9,12 +9,12 @@ class Config{
     
     
     public static function DB_PASSWORD(){
-        return "Alexander000";
+        return "";
     }
     
     
     public static function DB_NAME(){
-        return "lostandfounddb";
+        return "LostandFoundDB";
     }
     
     
@@ -23,7 +23,7 @@ class Config{
     }
 
     public static function DB_PORT(){
-        return 3306;
+        return 3308;
     }
     
     
