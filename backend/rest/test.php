@@ -8,7 +8,7 @@
     require_once __DIR__ . "/dao/categoriesDao.php";  
 
     $user = new User();
-    $getUser = $user->getUserByEmail("bob.brown@example.com");
+    $getUser = $user->getUserByEmail("john.doe@example.com");
 
     $categories = new Category();
     $getCategories = $categories->gettAllCategories();

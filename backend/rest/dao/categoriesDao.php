@@ -20,21 +20,6 @@
             return $this->query($query, []);
         }
 
-        public function getItemByStatus($status){
-
-        }
-
-        public function getItemByName($name){
-
-        }
-
-        public function getItemByUser($user_id){
-
-        }
-
-        public function getAllItems(){
-
-        }
 
 
     }
