@@ -25,8 +25,8 @@
    
         public function getItemByName($name){
             
-            $query = "SELECT * FROM " . $this->table_name . " WHERE itemName = :itemName";
-            $params = [":itemName" => $name];
+            $query = "SELECT * FROM " . $this->table_name . " WHERE itemName LIKE :itemName";
+            $params = [":itemName" => '%' . $name . '%'];
             return $this->query($query, $params);
         }
 

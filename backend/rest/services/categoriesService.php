@@ -18,7 +18,7 @@ class CategoriesService extends BaseService
         $categories = $this->dao->getCategories();
 
         if(empty($categories)){
-            return "Error retrieving data."; 
+            throw new RuntimeException("Categories not found.");
         }
 
         return $categories;
@@ -30,13 +30,13 @@ class CategoriesService extends BaseService
     public function getCategoryByName($category_name){
 
         if(empty($category_name)){
-            return "Category name can not be empty";
+            throw new InvalidArgumentException("Category name cannot be empty.");
         }
 
         $category = $this->dao->getCategoryByName($category_name);
 
         if(empty($category)){
-            return "Invalid Category name";
+            throw new InvalidArgumentException("Invalid Category Name.");
         }
 
         return $category;

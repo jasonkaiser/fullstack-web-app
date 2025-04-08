@@ -16,7 +16,7 @@ class ClaimRequestsService extends BaseService
         $claimRequests = $this->dao->getClaimRequests();
 
         if(empty($claimRequests)){
-            return "Error retrieving data."; 
+            throw new RuntimeException("Claim Requests not found.");
         }
 
         return $claimRequests;
