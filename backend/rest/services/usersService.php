@@ -18,7 +18,7 @@ class UsersService extends BaseService
         $users = $this->dao->getAllUsers();
 
         if(empty($users)){
-            return "Error retrieving data."; 
+            throw new RuntimeException("Users not found.");
         }   
     
         return $users;
@@ -30,17 +30,17 @@ class UsersService extends BaseService
 
         if(empty($email)){
             
-            return "Email can not be empty.";
+            throw new InvalidArgumentException("Email cannot be empty.");
         }
         
         if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-            return "Invalid Email format";
+            throw new InvalidArgumentException("Invalid email format.");
         }
 
         $user = $this->dao->getUserByEmail($email);
 
         if(empty($user)){
-            return "No User found with that Email";
+            throw new RuntimeException("User not found.");
         }
 
         return $user;
