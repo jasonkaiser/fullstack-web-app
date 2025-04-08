@@ -69,7 +69,7 @@
     echo "<h3>Category by Name:</h3>";
     print_r($categoryByName);
 
-    $addUser = $user->add(["name" => "Test Test", "email" => "2adwads@example.com", "passwordHash" => "123456"]);
+    $addUser = $user->add(["name" => "Test Test", "email" => "2adwads@example.com", "password" => "123456"]);
     echo "<h3>User Add Result:</h3>";
     print_r($addUser);
     
