@@ -13,7 +13,7 @@ class UsersService extends BaseService
 
         $users = $this->dao->getAllUsers();
 
-        if(!is_array($users)){
+        if(empty($users)){
             return "Error retrieving data."; 
         }   
     
