@@ -4,10 +4,14 @@ require_once __DIR__ . '/../dao/usersDao.php';
 
 class UsersService extends BaseService
 {   
+
+
     public function __construct()
     {
         parent::__construct(new User);
     }
+
+
 
     public function getAllUsers() {
 
@@ -19,6 +23,8 @@ class UsersService extends BaseService
     
         return $users;
     }
+
+    
 
     public function getUserByEmail($email){
 

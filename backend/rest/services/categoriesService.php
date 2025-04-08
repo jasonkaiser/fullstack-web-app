@@ -4,10 +4,14 @@ require_once __DIR__ . '/../dao/categoriesDao.php';
 
 class CategoriesService extends BaseService
 {   
+
+
     public function __construct()
     {
         parent::__construct(new Category);
     }
+
+
 
     public function getCategories(){
         
@@ -20,6 +24,8 @@ class CategoriesService extends BaseService
         return $categories;
 
     }
+
+    
 
     public function getCategoryByName($category_name){
 
