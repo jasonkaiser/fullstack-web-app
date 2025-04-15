@@ -1,6 +1,34 @@
 <?php
 
 // Get all users
+/**
+* @OA\Put(
+*     path="/restaurant/{id}",
+*     tags={"restaurants"},
+*     summary="Update an existing restaurant by ID",
+*     @OA\Parameter(
+*         name="id",
+*         in="path",
+*         required=true,
+*         description="Restaurant ID",
+*         @OA\Schema(type="integer", example=1)
+*     ),
+*     @OA\RequestBody(
+*         required=true,
+*         @OA\JsonContent(
+*             required={"name", "location"},
+*             @OA\Property(property="name", type="string", example="Updated Name"),
+*             @OA\Property(property="location", type="string", example="New Location"),
+*             @OA\Property(property="cuisine", type="string", example="Fusion")
+*         )
+*     ),
+*     @OA\Response(
+*         response=200,
+*         description="Restaurant updated"
+*     )
+* )
+*/
+
 Flight::route('GET /users', function() {
     Flight::json(Flight::usersService()->getAllUsers());
 });
