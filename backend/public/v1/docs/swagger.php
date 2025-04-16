@@ -16,4 +16,6 @@ $openapi = \OpenApi\Generator::scan([
 ]);
 header('Content-Type: application/json');
 echo $openapi->toJson();
+
+//
 ?>
