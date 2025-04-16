@@ -22,7 +22,14 @@
  */
 Flight::route('GET /users', function(){
     $email = Flight::request()->query['email'] ?? null;
-    Flight::json(Flight::usersService()->getAllUsers($email));
+    
+    if ($email) {
+
+        Flight::json(Flight::usersService()->getUserByEmail($email));
+    } else {
+    
+        Flight::json(Flight::usersService()->getAllUsers());
+    }
 });
 
 /**
@@ -55,10 +62,10 @@ Flight::route('GET /users/@id', function($id){
  *     @OA\RequestBody(
  *         required=true,
  *         @OA\JsonContent(
- *             required={"name", "email", "password"},
+ *             required={"name", "email", "passwordHash"},
  *             @OA\Property(property="name", type="string", example="John Doe"),
  *             @OA\Property(property="email", type="string", example="john@example.com"),
- *             @OA\Property(property="password", type="string", example="securepassword123"),
+ *             @OA\Property(property="passwordHash", type="string", example="securepassword123"),
  *             @OA\Property(property="role", type="string", example="User")
  *         )
  *     ),
@@ -91,7 +98,7 @@ Flight::route('POST /users', function(){
  *             required={"name", "email"},
  *             @OA\Property(property="name", type="string", example="Updated Name"),
  *             @OA\Property(property="email", type="string", example="new.email@example.com"),
- *             @OA\Property(property="password", type="string", example="newpassword123")
+ *             @OA\Property(property="passwordHash", type="string", example="newpassword123")
  *         )
  *     ),
  *     @OA\Response(
@@ -103,37 +110,6 @@ Flight::route('POST /users', function(){
 Flight::route('PUT /users/@id', function($id){
     $data = Flight::request()->data->getData();
     Flight::json(Flight::usersService()->update($id, $data));
-});
-
-/**
- * @OA\Patch(
- *     path="/users/{id}",
- *     tags={"users"},
- *     summary="Partially update a user by ID",
- *     @OA\Parameter(
- *         name="id",
- *         in="path",
- *         required=true,
- *         description="User ID",
- *         @OA\Schema(type="integer", example=1)
- *     ),
- *     @OA\RequestBody(
- *         required=true,
- *         @OA\JsonContent(
- *             @OA\Property(property="name", type="string", example="Only name changed"),
- *             @OA\Property(property="email", type="string", example="Only email changed"),
- *             @OA\Property(property="password", type="string", example="Optional")
- *         )
- *     ),
- *     @OA\Response(
- *         response=200,
- *         description="User partially updated"
- *     )
- * )
- */
-Flight::route('PATCH /users/@id', function($id){
-    $data = Flight::request()->data->getData();
-    Flight::json(Flight::usersService()->partial_update($id, $data));
 });
 
 /**

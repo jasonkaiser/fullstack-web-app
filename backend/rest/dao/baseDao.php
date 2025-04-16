@@ -80,30 +80,33 @@ class BaseDao{
     }
     
 
-    public function update($entity, $id, $id_column = 'id')
-    {
+    public function update($entity, $id, $id_column = 'id') {
+        // Add validation at the DAO level
+        if (!is_array($entity)) {
+            throw new Exception("Update data must be an array, received: " . gettype($entity));
+        }
         
+        if (empty($entity)) {
+            throw new Exception("Update data cannot be empty");
+        }
+    
         $query = "UPDATE " . $this->table_name . " SET ";
-
         foreach ($entity as $column => $value) {
-            if ($column != $id_column) {  
+            if ($column != $id_column) {
                 $query .= $column . "=:" . $column . ", ";
             }
         }
-
-    
+        
         $query = substr($query, 0, -2);
         $query .= " WHERE " . $id_column . " = :id";
-        $stmt = $this->connection->prepare($query);
-
-        $entity['id'] = $id;
-   
-
-        if ($stmt->execute($entity)) {
-            return $entity;  
-        } else {
         
-            throw new Exception("Failed to update entity.");
+        $stmt = $this->connection->prepare($query);
+        $entity['id'] = $id;
+    
+        if ($stmt->execute($entity)) {
+            return $entity;
+        } else {
+            throw new Exception("Failed to update entity: " . implode(", ", $stmt->errorInfo()));
         }
     }
 
