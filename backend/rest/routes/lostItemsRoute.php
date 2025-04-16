@@ -1,43 +1,193 @@
 <?php
-
-// Get all lost items
-Flight::route('GET /lost-items', function() {
-    Flight::json(Flight::lostItemsService()->getLostItems());
+/**
+ * @OA\Get(
+ *      path="/lost-items",
+ *      tags={"lost-items"},
+ *      summary="Get all lost items",
+ *      @OA\Parameter(
+ *          name="category",
+ *          in="query",
+ *          required=false,
+ *          @OA\Schema(type="integer"),
+ *          description="Optional category ID to filter items"
+ *      ),
+ *      @OA\Response(
+ *           response=200,
+ *           description="Array of all lost items in the database"
+ *      )
+ * )
+ */
+Flight::route('GET /lost-items', function(){
+    $category = Flight::request()->query['category'] ?? null;
+    Flight::json(Flight::lostItemsService()->getLostItems($category));
 });
 
-// Get lost item by ID 
-Flight::route('GET /lost-items/@id', function($id) {
+/**
+ * @OA\Get(
+ *     path="/lost-items/{id}",
+ *     tags={"lost-items"},
+ *     summary="Get lost item by ID",
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         required=true,
+ *         description="ID of the lost item",
+ *         @OA\Schema(type="integer", example=1)
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Returns the lost item with the given ID"
+ *     )
+ * )
+ */
+Flight::route('GET /lost-items/@id', function($id){ 
     Flight::json(Flight::lostItemsService()->getById($id));
 });
 
-// Get lost items by category
-Flight::route('GET /lost-items/category/@category', function($category) {
+/**
+ * @OA\Get(
+ *     path="/lost-items/category/{category}",
+ *     tags={"lost-items"},
+ *     summary="Get lost items by category",
+ *     @OA\Parameter(
+ *         name="category",
+ *         in="path",
+ *         required=true,
+ *         description="Category ID",
+ *         @OA\Schema(type="integer", example=1)
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Returns lost items in the given category"
+ *     )
+ * )
+ */
+Flight::route('GET /lost-items/category/@category', function($category){
     Flight::json(Flight::lostItemsService()->getItemByCategory($category));
 });
 
-// Get lost items by name
-Flight::route('GET /lost-items/name/@name', function($name) {
+/**
+ * @OA\Get(
+ *     path="/lost-items/name/{name}",
+ *     tags={"lost-items"},
+ *     summary="Search lost items by name",
+ *     @OA\Parameter(
+ *         name="name",
+ *         in="path",
+ *         required=true,
+ *         description="Name to search for",
+ *         @OA\Schema(type="string", example="wallet")
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Returns matching lost items"
+ *     )
+ * )
+ */
+Flight::route('GET /lost-items/name/@name', function($name){
     Flight::json(Flight::lostItemsService()->getItemByName($name));
 });
 
-// Get lost items by user
-Flight::route('GET /lost-items/user/@user', function($user) {
+/**
+ * @OA\Get(
+ *     path="/lost-items/user/{user}",
+ *     tags={"lost-items"},
+ *     summary="Get lost items by user",
+ *     @OA\Parameter(
+ *         name="user",
+ *         in="path",
+ *         required=true,
+ *         description="User ID",
+ *         @OA\Schema(type="integer", example=1)
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Returns lost items for the given user"
+ *     )
+ * )
+ */
+Flight::route('GET /lost-items/user/@user', function($user){
     Flight::json(Flight::lostItemsService()->getItemByUser($user));
 });
 
-// Create new lost item
-Flight::route('POST /lost-items', function() {
+/**
+ * @OA\Post(
+ *     path="/lost-items",
+ *     tags={"lost-items"},
+ *     summary="Report a lost item",
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\JsonContent(
+ *             required={"userID", "categoryID", "itemName"},
+ *             @OA\Property(property="userID", type="integer", example=1),
+ *             @OA\Property(property="categoryID", type="integer", example=1),
+ *             @OA\Property(property="itemName", type="string", example="Wallet"),
+ *             @OA\Property(property="description", type="string", example="Black leather wallet"),
+ *             @OA\Property(property="location", type="string", example="Cafeteria")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Lost item reported"
+ *     )
+ * )
+ */
+Flight::route('POST /lost-items', function(){
     $data = Flight::request()->data->getData();
     Flight::json(Flight::lostItemsService()->add($data));
 });
 
-// Update lost item
-Flight::route('PUT /lost-items/@id', function($id) {
+/**
+ * @OA\Put(
+ *     path="/lost-items/{id}",
+ *     tags={"lost-items"},
+ *     summary="Update lost item by ID",
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         required=true,
+ *         description="Lost item ID",
+ *         @OA\Schema(type="integer", example=1)
+ *     ),
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\JsonContent(
+ *             required={"itemName"},
+ *             @OA\Property(property="itemName", type="string", example="Updated Wallet"),
+ *             @OA\Property(property="description", type="string", example="Updated description"),
+ *             @OA\Property(property="location", type="string", example="New location")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Lost item updated"
+ *     )
+ * )
+ */
+Flight::route('PUT /lost-items/@id', function($id){
     $data = Flight::request()->data->getData();
     Flight::json(Flight::lostItemsService()->update($id, $data));
 });
 
-// Delete lost item
-Flight::route('DELETE /lost-items/@id', function($id) {
+/**
+ * @OA\Delete(
+ *     path="/lost-items/{id}",
+ *     tags={"lost-items"},
+ *     summary="Delete lost item by ID",
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         required=true,
+ *         description="Lost item ID",
+ *         @OA\Schema(type="integer", example=1)
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Lost item deleted"
+ *     )
+ * )
+ */
+Flight::route('DELETE /lost-items/@id', function($id){
     Flight::json(Flight::lostItemsService()->delete($id));
 });
+?>

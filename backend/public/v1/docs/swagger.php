@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/../../../rest/vendor/autoload.php';
 
-define('LOCALSERVER', 'http://localhost/fullstack-web-app/backend/');
+define('LOCALSERVER', 'http://localhost/fullstack-web-app/backend/rest');
 define('PRODSERVER', 'https://add-production-server-after-deployment/backend/');
 
 if($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.0.1'){
