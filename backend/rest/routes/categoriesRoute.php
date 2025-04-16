@@ -1,4 +1,5 @@
 <?php
+//
 /**
  * @OA\Get(
  *      path="/categories",
