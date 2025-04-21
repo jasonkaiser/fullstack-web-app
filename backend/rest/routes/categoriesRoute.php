@@ -1,4 +1,6 @@
 <?php
+//  
+//  ----------------  Categories  -----------------------------------------------------
 //
 /**
  * @OA\Get(
@@ -107,11 +109,13 @@ Flight::route('POST /categories', function(){
  *     )
  * )
  */
-Flight::route('PUT /categories/@id', function($id){
-    $data = Flight::request()->data->getData();
-    Flight::json(Flight::categoriesService()->update($id, $data));
-});
+Flight::route('PUT /categories/@id', function($id) {
 
+    $categoryService = new CategoriesService();
+    $result = $categoryService->update($id, Flight::request()->data->getData());
+    Flight::json($result);
+    
+});
 /**
  * @OA\Delete(
  *     path="/categories/{id}",
