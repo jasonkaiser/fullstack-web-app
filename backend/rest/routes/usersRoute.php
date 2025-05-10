@@ -21,6 +21,7 @@
  * )
  */
 Flight::route('GET /users', function(){
+    Flight::authMiddleware()->authorizeRole(Roles::ADMIN);
     $email = Flight::request()->query['email'] ?? null;
     
     if ($email) {
@@ -51,6 +52,7 @@ Flight::route('GET /users', function(){
  * )
  */
 Flight::route('GET /users/@id', function($id){ 
+    Flight::authMiddleware()->authorizeRole(Roles::ADMIN);
     Flight::json(Flight::usersService()->getById($id));
 });
 
@@ -76,7 +78,9 @@ Flight::route('GET /users/@id', function($id){
  * )
  */
 Flight::route('POST /users', function(){
+    Flight::authMiddleware()->authorizeRole(Roles::ADMIN);
     $data = Flight::request()->data->getData();
+    ValidationMiddleware::validate('user', $data);
     Flight::json(Flight::usersService()->add($data));
 });
 
@@ -108,7 +112,9 @@ Flight::route('POST /users', function(){
  * )
  */
 Flight::route('PUT /users/@id', function($id){
+    Flight::authMiddleware()->authorizeRole(Roles::ADMIN);
     $data = Flight::request()->data->getData();
+    ValidationMiddleware::validate('user', $data);
     Flight::json(Flight::usersService()->update($id, $data));
 });
 
@@ -131,6 +137,7 @@ Flight::route('PUT /users/@id', function($id){
  * )
  */
 Flight::route('DELETE /users/@id', function($id){
+    Flight::authMiddleware()->authorizeRole(Roles::ADMIN);
     Flight::json(Flight::usersService()->delete($id));
 });
 ?>
