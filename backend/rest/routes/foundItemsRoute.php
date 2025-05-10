@@ -21,6 +21,7 @@
  * )
  */
 Flight::route('GET /found-items', function(){
+    Flight::authMiddleware()->authorizeRole([Roles::ADMIN, Roles::USER]);
     $category = Flight::request()->query['category'] ?? null;
     Flight::json(Flight::foundItemsService()->getFoundItems($category));
 });
@@ -44,6 +45,8 @@ Flight::route('GET /found-items', function(){
  * )
  */
 Flight::route('GET /found-items/@id', function($id){ 
+    Flight::authMiddleware()->authorizeRole(Roles::ADMIN);
+
     Flight::json(Flight::foundItemsService()->getById($id));
 });
 
@@ -66,6 +69,7 @@ Flight::route('GET /found-items/@id', function($id){
  * )
  */
 Flight::route('GET /found-items/category/@category', function($category){
+    Flight::authMiddleware()->authorizeRole([Roles::ADMIN, Roles::USER]);
     Flight::json(Flight::foundItemsService()->getItemByCategory($category));
 });
 
@@ -88,6 +92,8 @@ Flight::route('GET /found-items/category/@category', function($category){
  * )
  */
 Flight::route('GET /found-items/name/@name', function($name){
+    Flight::authMiddleware()->authorizeRole([Roles::ADMIN, Roles::USER]);
+
     Flight::json(Flight::foundItemsService()->getItemByName($name));
 });
 
@@ -110,6 +116,7 @@ Flight::route('GET /found-items/name/@name', function($name){
  * )
  */
 Flight::route('GET /found-items/user/@user', function($user){
+    Flight::authMiddleware()->authorizeRole([Roles::ADMIN, Roles::USER]);
     Flight::json(Flight::foundItemsService()->getItemByUser($user));
 });
 
@@ -136,7 +143,9 @@ Flight::route('GET /found-items/user/@user', function($user){
  * )
  */
 Flight::route('POST /found-items', function(){
+    Flight::authMiddleware()->authorizeRoles([Roles::ADMIN, Roles::USER]);
     $data = Flight::request()->data->getData();
+    ValidationMiddleware::validate('foundItem', $data);
     Flight::json(Flight::foundItemsService()->add($data));
 });
 
@@ -168,7 +177,9 @@ Flight::route('POST /found-items', function(){
  * )
  */
 Flight::route('PUT /found-items/@id', function($id){
+    Flight::authMiddleware()->authorizeRole(Roles::ADMIN);
     $data = Flight::request()->data->getData();
+    ValidationMiddleware::validate('foundItem', $data);
     Flight::json(Flight::foundItemsService()->update($id, $data));
 });
 
@@ -191,6 +202,7 @@ Flight::route('PUT /found-items/@id', function($id){
  * )
  */
 Flight::route('DELETE /found-items/@id', function($id){
+    Flight::authMiddleware()->authorizeRole(Roles::ADMIN);
     Flight::json(Flight::foundItemsService()->delete($id));
 });
 ?>

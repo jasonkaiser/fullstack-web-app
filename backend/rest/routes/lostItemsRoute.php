@@ -21,6 +21,7 @@
  * )
  */
 Flight::route('GET /lost-items', function(){
+    Flight::authMiddleware()->authorizeRole([Roles::ADMIN, Roles::USER]);
     $category = Flight::request()->query['category'] ?? null;
     Flight::json(Flight::lostItemsService()->getLostItems($category));
 });
@@ -44,6 +45,7 @@ Flight::route('GET /lost-items', function(){
  * )
  */
 Flight::route('GET /lost-items/@id', function($id){ 
+    Flight::authMiddleware()->authorizeRole(Roles::ADMIN);
     Flight::json(Flight::lostItemsService()->getById($id));
 });
 
@@ -66,6 +68,7 @@ Flight::route('GET /lost-items/@id', function($id){
  * )
  */
 Flight::route('GET /lost-items/category/@category', function($category){
+    Flight::authMiddleware()->authorizeRole([Roles::ADMIN, Roles::USER]);
     Flight::json(Flight::lostItemsService()->getItemByCategory($category));
 });
 
@@ -88,6 +91,7 @@ Flight::route('GET /lost-items/category/@category', function($category){
  * )
  */
 Flight::route('GET /lost-items/name/@name', function($name){
+    Flight::authMiddleware()->authorizeRole([Roles::ADMIN, Roles::USER]);
     Flight::json(Flight::lostItemsService()->getItemByName($name));
 });
 
@@ -110,6 +114,7 @@ Flight::route('GET /lost-items/name/@name', function($name){
  * )
  */
 Flight::route('GET /lost-items/user/@user', function($user){
+    Flight::authMiddleware()->authorizeRole([Roles::ADMIN, Roles::USER]);
     Flight::json(Flight::lostItemsService()->getItemByUser($user));
 });
 
@@ -136,7 +141,9 @@ Flight::route('GET /lost-items/user/@user', function($user){
  * )
  */
 Flight::route('POST /lost-items', function(){
+    Flight::authMiddleware()->authorizeRoles([Roles::ADMIN, Roles::USER]);
     $data = Flight::request()->data->getData();
+    ValidationMiddleware::validate('lostItem', $data);
     Flight::json(Flight::lostItemsService()->add($data));
 });
 
@@ -168,7 +175,9 @@ Flight::route('POST /lost-items', function(){
  * )
  */
 Flight::route('PUT /lost-items/@id', function($id){
+    Flight::authMiddleware()->authorizeRole(Roles::ADMIN);
     $data = Flight::request()->data->getData();
+    ValidationMiddleware::validate('lostItem', $data);
     Flight::json(Flight::lostItemsService()->update($id, $data));
 });
 
@@ -191,6 +200,7 @@ Flight::route('PUT /lost-items/@id', function($id){
  * )
  */
 Flight::route('DELETE /lost-items/@id', function($id){
+    Flight::authMiddleware()->authorizeRole(Roles::ADMIN);
     Flight::json(Flight::lostItemsService()->delete($id));
 });
 ?>
