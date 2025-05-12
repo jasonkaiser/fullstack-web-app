@@ -1,6 +1,7 @@
 <?php
 require 'vendor/autoload.php';
 
+require_once __DIR__.'/../data/Roles.php';
 require_once __DIR__ . "/../middleware/authMiddleware.php";
 require_once __DIR__ . "/../middleware/validationMiddleware.php";
 

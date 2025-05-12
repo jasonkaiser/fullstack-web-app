@@ -21,7 +21,6 @@
  * )
  */
 Flight::route('GET /found-items', function(){
-    Flight::authMiddleware()->authorizeRole([Roles::ADMIN, Roles::USER]);
     $category = Flight::request()->query['category'] ?? null;
     Flight::json(Flight::foundItemsService()->getFoundItems($category));
 });
