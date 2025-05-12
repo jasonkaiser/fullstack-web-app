@@ -1,4 +1,3 @@
-//
 $(document).ready(function () {
     $('.btn-primary').click(function (e) {
         e.preventDefault();
@@ -8,7 +7,7 @@ $(document).ready(function () {
         const password = $('#password').val().trim();
         const confirmPassword = $('#confirm-password').val().trim();
 
-        // Basic validation
+
         if (!name || !email || !password || !confirmPassword) {
             showError('All fields are required');
             return;
