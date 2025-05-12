@@ -1,5 +1,4 @@
 
-//
 const config = {
     templateDir: 'frontend/pages/',
     styleDir: 'frontend/assets/styles/',
@@ -16,9 +15,56 @@ const routes = {
   
 };
 
+function updateNavbar() {
+    const role = localStorage.getItem('user_role');
+    const token = localStorage.getItem('jwt_token');
+
+    if (token) {
+        $('#login-link').hide();
+
+
+        if (!$('#logout-link').length) {
+            $('<li><a href="#" id="logout-link">Logout</a></li>')
+                .insertAfter('#login-link')
+                .click(function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('jwt_token');
+                    localStorage.removeItem('user_role');
+                    updateNavbar();
+                    window.location.hash = '#login';
+                });
+        } else {
+            $('#logout-link').show();
+        }
+    } else {
+        $('#login-link').show();
+        $('#logout-link').hide();
+    }
+
+    if (role === 'Admin') {
+        $('#admin-dashboard-link').show();
+    } else {
+        $('#admin-dashboard-link').hide();
+    }
+}
+
 function loadPage(route) {
     const app = $('#app');
+    const token = localStorage.getItem('jwt_token');
+    const role = localStorage.getItem('user_role');
+
     console.log('Loading page:', route);
+    console.log('JWT Token:', token);
+    console.log('User Role:', role);
+
+
+    if (route === 'admin') {
+        if (!token || role !== 'Admin') {
+            alert('Access denied. Admins only.');
+            window.location.hash = '#home';
+            return;
+        }
+    }
 
     if (routes[route]) {
         const htmlPath = `${config.templateDir}${routes[route]}`;
@@ -39,6 +85,8 @@ function loadPage(route) {
         app.html('<h1>Page not found!</h1>');
     }
 }
+
+
 
 function loadCSS(href) {
     $('#dynamic-css').remove();
@@ -76,6 +124,14 @@ $(document).ready(function () {
         $('.nav-links').toggleClass('open');
     });
 
-   
+    updateNavbar();
     loadSPA();
+});
+
+$(document).on('click', '#logout-link', function (e) {
+    e.preventDefault();
+    localStorage.removeItem('jwt_token');
+    localStorage.removeItem('user_role');
+    window.location.hash = '#home';
+    updateNavbar();
 });

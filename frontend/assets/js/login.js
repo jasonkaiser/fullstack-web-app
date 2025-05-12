@@ -22,7 +22,9 @@ $(document).ready(function() {
 
             success: function(response) {
                 localStorage.setItem('jwt_token', response.data.token);
-                window.location.hash = '#home'; // Triggers your custom SPA router
+                localStorage.setItem('user_role', response.data.role); 
+                updateNavbar();
+                window.location.hash = '#home'; 
             },
             error: function(xhr) {
                 const error = xhr.responseJSON?.error || 'Login failed';
@@ -40,5 +42,5 @@ $(document).ready(function() {
 
 
 
-//
+
 

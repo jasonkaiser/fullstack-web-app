@@ -1,5 +1,4 @@
 
-//
 $(document).ready(function () {
     const $container = $('#cards-container');
 
