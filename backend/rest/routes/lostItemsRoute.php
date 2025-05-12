@@ -21,7 +21,6 @@
  * )
  */
 Flight::route('GET /lost-items', function(){
-    Flight::authMiddleware()->authorizeRole([Roles::ADMIN, Roles::USER]);
     $category = Flight::request()->query['category'] ?? null;
     Flight::json(Flight::lostItemsService()->getLostItems($category));
 });
