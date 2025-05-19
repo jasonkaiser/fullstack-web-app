@@ -15,38 +15,6 @@ const routes = {
   
 };
 
-function updateNavbar() {
-    const role = localStorage.getItem('user_role');
-    const token = localStorage.getItem('jwt_token');
-
-    if (token) {
-        $('#login-link').hide();
-
-
-        if (!$('#logout-link').length) {
-            $('<li><a href="#" id="logout-link">Logout</a></li>')
-                .insertAfter('#login-link')
-                .click(function(e) {
-                    e.preventDefault();
-                    localStorage.removeItem('jwt_token');
-                    localStorage.removeItem('user_role');
-                    updateNavbar();
-                    window.location.hash = '#login';
-                });
-        } else {
-            $('#logout-link').show();
-        }
-    } else {
-        $('#login-link').show();
-        $('#logout-link').hide();
-    }
-
-    if (role === 'Admin') {
-        $('#admin-dashboard-link').show();
-    } else {
-        $('#admin-dashboard-link').hide();
-    }
-}
 
 function loadPage(route) {
     const app = $('#app');
@@ -109,23 +77,54 @@ function loadJS(src) {
 }
 
 function loadSPA() {
-    const route = location.hash.slice(1) || 'home';
+    const token = localStorage.getItem('jwt_token');
+    let route = location.hash.slice(1);
+
+    if (!route) {
+        if (!token) {
+            route = 'login';
+            location.hash = '#login';
+        } else {
+            route = 'home';
+            location.hash = '#home';
+        }
+    } else {
+
+        if (!token) {
+            if (route !== 'login' && route !== 'register') {
+                route = 'login';
+                location.hash = '#login';
+            }
+        }
+    }
+
     loadPage(route);
 }
 
+
+
 $(window).on('hashchange', function () {
+    const token = localStorage.getItem('jwt_token');
     const route = location.hash.slice(1);
+
+  
+    if (!token && route !== 'login' && route !== 'register') {
+        window.location.hash = '#login';
+        return; 
+        
+    }
+
     loadPage(route);
 });
 
+
 $(document).ready(function () {
-   
     $('.hamburger').on('click', function () {
         $('.nav-links').toggleClass('open');
     });
 
+    loadSPA(); 
     updateNavbar();
-    loadSPA();
 });
 
 $(document).on('click', '#logout-link', function (e) {
