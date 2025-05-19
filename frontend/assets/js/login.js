@@ -1,3 +1,36 @@
+function updateNavbar() {
+    const role = localStorage.getItem('user_role');
+    const token = localStorage.getItem('jwt_token');
+    
+
+    if (token) {
+        $('#login-link').hide();
+
+
+        if (!$('#logout-link').length) {
+            $('<li><a href="#" id="logout-link">Logout</a></li>')
+                .insertAfter('#login-link')
+                .click(function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('jwt_token');
+                    localStorage.removeItem('user_role');
+                    updateNavbar();
+                    window.location.hash = '#login';
+                });
+        } else {
+            $('#logout-link').show();
+        }
+    } else {
+        $('#login-link').show();
+        $('#logout-link').hide();
+    }
+
+    if (role === 'Admin') {
+        $('#admin-dashboard-link').show();
+    } else {
+        $('#admin-dashboard-link').hide();
+    }
+}
 $(document).ready(function() {
     $('.btn-primary').click(function(e) {
         e.preventDefault();
@@ -23,6 +56,7 @@ $(document).ready(function() {
             success: function(response) {
                 localStorage.setItem('jwt_token', response.data.token);
                 localStorage.setItem('user_role', response.data.role); 
+                localStorage.setItem('user_id', response.data.id);
                 updateNavbar();
                 window.location.hash = '#home'; 
             },
