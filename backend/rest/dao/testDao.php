@@ -3,15 +3,12 @@
     ini_set('display_errors', 1);
     error_reporting(E_ALL);
 
-        require_once __DIR__ . "/dao/baseDao.php";
-        require_once __DIR__ . "/dao/usersDao.php";
-        require_once __DIR__ . "/dao/categoriesDao.php";
-        require_once __DIR__ . "/dao/lostItemsDao.php";
-        require_once __DIR__ . "/dao/foundItemsDao.php";
-        require_once __DIR__ . "/dao/claimRequestsDao.php";
+        require_once __DIR__ . "/baseDao.php";
+        require_once __DIR__ . "/usersDao.php";
+
 
     $user = new User();
-    $getUser = $user->getUserByEmail("john.doe@example.com");
+   /* $getUser = $user->getUserByEmail("john.doe@example.com");
 
     $categories = new Category();
     $getCategories = $categories->getCategories();
@@ -76,7 +73,12 @@
     $getUserById = $user->getById(1);
     echo "<h3>Get User By ID Result:</h3>";
     print_r($getUserById);
-
+*/
+    $user->update([
+    "name" => "Test",
+    "email" => "updated.email@example.com",
+    "passwordHash" => "newpassword123"
+], 1);
 
 
 ?>

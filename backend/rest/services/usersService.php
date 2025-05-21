@@ -45,5 +45,14 @@ class UsersService extends BaseService
 
         return $user;
     } 
+
+
+     public function update($id, $data) {
+        if (empty($data)) {
+            throw new InvalidArgumentException("Update data cannot be empty.");
+        }
+
+        return $this->dao->updateUser($data, $id);
+    }
 }
 ?>

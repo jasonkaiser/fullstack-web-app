@@ -80,35 +80,45 @@ class BaseDao{
     }
     
 
-    public function update($entity, $id, $id_column = 'id') {
-        // Add validation at the DAO level
-        if (!is_array($entity)) {
-            throw new Exception("Update data must be an array, received: " . gettype($entity));
-        }
-        
-        if (empty($entity)) {
-            throw new Exception("Update data cannot be empty");
-        }
-    
-        $query = "UPDATE " . $this->table_name . " SET ";
-        foreach ($entity as $column => $value) {
-            if ($column != $id_column) {
-                $query .= $column . "=:" . $column . ", ";
-            }
-        }
-        
-        $query = substr($query, 0, -2);
-        $query .= " WHERE " . $id_column . " = :id";
-        
-        $stmt = $this->connection->prepare($query);
-        $entity['id'] = $id;
-    
-        if ($stmt->execute($entity)) {
-            return $entity;
-        } else {
-            throw new Exception("Failed to update entity: " . implode(", ", $stmt->errorInfo()));
+   public function update($entity, $id, $id_column = 'id') {
+    if (!is_array($entity)) {
+        throw new Exception("Update data must be an array, received: " . gettype($entity));
+    }
+
+    if (empty($entity)) {
+        throw new Exception("Update data cannot be empty");
+    }
+
+    $setParts = [];
+    $params = [];
+
+    foreach ($entity as $column => $value) {
+        if ($column !== $id_column) {
+            $setParts[] = "$column = :$column";
+            $params[":$column"] = $value;
         }
     }
+
+    if (empty($setParts)) {
+        throw new Exception("No fields to update.");
+    }
+
+    $query = "UPDATE " . $this->table_name . " SET " . implode(", ", $setParts) . " WHERE $id_column = :id";
+
+    $params[":id"] = $id;
+
+    $stmt = $this->connection->prepare($query);
+
+    if ($stmt->execute($params)) {
+        if ($stmt->rowCount() === 0) {
+            throw new Exception("No rows updated. Either the ID does not exist or the data is the same.");
+        }
+        // Return updated entity with id included
+        return array_merge($entity, [$id_column => $id]);
+    } else {
+        throw new Exception("Failed to update entity: " . implode(", ", $stmt->errorInfo()));
+    }
+}
 
     public function delete($id)
     {

@@ -101,6 +101,7 @@
     
 }
 
+
 .card-design {
     width: 15%;
     height: 35vh;
@@ -110,6 +111,7 @@
     margin-bottom: 2em;
     display: flex; 
     flex-direction: column; 
+
 }
 
 .card-image {
@@ -179,6 +181,22 @@
     align-items: center;
     padding: 0 0.6em;
     height: 2.5vh;
+}
+
+.card-location {
+    border: 1px solid #333333;
+    border-radius: 10px;
+    width: 46%;
+    font-weight: bold;
+    font-size: 0.8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 0.6em;
+    height: 2.5vh;
+    white-space: nowrap; 
+    overflow: hidden;    
+    text-overflow: ellipsis; 
 }
 
 @media (max-width: 768px) {

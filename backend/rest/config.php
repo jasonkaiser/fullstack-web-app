@@ -25,6 +25,11 @@ class Config{
     public static function DB_PORT(){
         return 3306;
     }
+
+    public static function JWT_SECRET() {
+        return 'jason2000';
+    }
+ 
     
     
 }
