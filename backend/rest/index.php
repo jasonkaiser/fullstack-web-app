@@ -3,7 +3,6 @@ require 'vendor/autoload.php';
 
 require_once __DIR__.'/../data/Roles.php';
 require_once __DIR__ . "/../middleware/authMiddleware.php";
-require_once __DIR__ . "/../middleware/validationMiddleware.php";
 
 
 
@@ -14,7 +13,6 @@ Flight::register('foundItemsService', 'FoundItemsService');
 Flight::register('lostItemsService', 'LostItemsService');
 Flight::register('authService', 'AuthService');
 Flight::register('authMiddleware', 'AuthMiddleware');
-Flight::register('validationMiddleware', 'ValidationMiddleware');
 
 
 

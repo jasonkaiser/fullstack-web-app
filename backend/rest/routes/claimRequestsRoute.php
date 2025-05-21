@@ -72,7 +72,6 @@ Flight::route('GET /claim-requests/@id', function($id){
 Flight::route('POST /claim-requests', function(){
     Flight::authMiddleware()->authorizeRoles([Roles::ADMIN, Roles::USER]);
     $data = Flight::request()->data->getData();
-    ValidationMiddleware::validate('claimRequest', $data);
     Flight::json(Flight::claimRequestsService()->add($data));
 });
 
@@ -105,7 +104,6 @@ Flight::route('POST /claim-requests', function(){
 Flight::route('PUT /claim-requests/@id', function($id){
     Flight::authMiddleware()->authorizeRole(Roles::ADMIN);
     $data = Flight::request()->data->getData();
-    ValidationMiddleware::validate('claimRequest', $data);
     Flight::json(Flight::claimRequestsService()->update($id, $data));
 });
 
