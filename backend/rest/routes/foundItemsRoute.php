@@ -144,7 +144,6 @@ Flight::route('GET /found-items/user/@user', function($user){
 Flight::route('POST /found-items', function(){
     Flight::authMiddleware()->authorizeRoles([Roles::ADMIN, Roles::USER]);
     $data = Flight::request()->data->getData();
-    ValidationMiddleware::validate('foundItem', $data);
     Flight::json(Flight::foundItemsService()->add($data));
 });
 
@@ -178,7 +177,6 @@ Flight::route('POST /found-items', function(){
 Flight::route('PUT /found-items/@id', function($id){
     Flight::authMiddleware()->authorizeRole(Roles::ADMIN);
     $data = Flight::request()->data->getData();
-    ValidationMiddleware::validate('foundItem', $data);
     Flight::json(Flight::foundItemsService()->update($id, $data));
 });
 

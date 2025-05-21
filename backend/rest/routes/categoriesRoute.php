@@ -85,7 +85,6 @@ Flight::route('GET /categories/id/@id', function($id){
 Flight::route('POST /categories', function(){
     Flight::authMiddleware()->authorizeRole(Roles::ADMIN);
     $data = Flight::request()->data->getData();
-    ValidationMiddleware::validate('category', $data);
     Flight::json(Flight::categoriesService()->add($data));
 });
 
@@ -117,7 +116,6 @@ Flight::route('POST /categories', function(){
 Flight::route('PUT /categories/@id', function($id) {
     Flight::authMiddleware()->authorizeRole(Roles::ADMIN);
     $data = Flight::request()->data->getData();
-    ValidationMiddleware::validate('category', $data);
     $categoryService = new CategoriesService();
     $result = $categoryService->update($id, $data);
     Flight::json($result);

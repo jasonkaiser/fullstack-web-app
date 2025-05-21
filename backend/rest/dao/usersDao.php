@@ -26,6 +26,10 @@ class User extends BaseDao {
         $params = [':email' => $email];  
         return $this->query($query, $params);  
     }
+
+    public function updateUser($data, $id) {
+        return $this->update($data, $id);
+    }
     
 }
 
