@@ -1,18 +1,16 @@
-$('form').submit(function(e) {
+document.querySelector('form').addEventListener('submit', function(e) {
     e.preventDefault();
 
-    const reportType = $('#reportType').val(); 
-    const title = $('#title').val().trim();
-    const description = $('#description').val().trim();
-    const category = $('#category').val();
-    const location = $('#location').val().trim();
-    const date = $('#date').val();
-    
+    const reportType = document.getElementById('reportType').value;
+    const title = document.getElementById('title').value.trim();
+    const description = document.getElementById('description').value.trim();
+    const category = document.getElementById('category').value;
+    const location = document.getElementById('location').value.trim();
+    const date = document.getElementById('date').value;
 
     const userID = localStorage.getItem('user_id');
     const token = localStorage.getItem('jwt_token');
 
-   
     const categoryMap = {
         'electronics': 1,
         'pets': 2,
@@ -31,17 +29,15 @@ $('form').submit(function(e) {
         return;
     }
 
-  
     const data = {
         userID: parseInt(userID),
         categoryID: categoryID,
         itemName: title,
         description: description,
         location: location,
-  
+
     };
 
-   
     let url = '';
     if (reportType === 'lost') {
         url = '/lost-items';
@@ -52,21 +48,25 @@ $('form').submit(function(e) {
         return;
     }
 
-    
-    $.ajax({
-        url: 'backend/rest' + url,  
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(data),
+    fetch('backend/rest' + url, {
+        method: 'POST',
         headers: {
-            Authorization: 'Bearer ' + token
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
         },
-        success: function(response) {
-            alert('Report submitted successfully!');
-            $('form')[0].reset();
-        },
-        error: function(xhr) {
-            alert('Failed to submit report: ' + (xhr.responseJSON?.error || xhr.statusText));
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(err => { throw err; });
         }
+        return response.json();
+    })
+    .then(response => {
+        alert('Report submitted successfully!');
+        document.querySelector('form').reset();
+    })
+    .catch(error => {
+        alert('Failed to submit report: ' + (error.error || error.message || 'Unknown error'));
     });
 });
