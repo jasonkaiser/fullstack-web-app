@@ -1,4 +1,8 @@
 
+$(document).ready(function () {
+    updateNavbar();
+});
+
 const config = {
     templateDir: 'frontend/pages/',
     styleDir: 'frontend/assets/styles/',
@@ -11,7 +15,9 @@ const routes = {
     register: 'register.html',
     profile: 'profile.html',
     login: 'login.html',
-    admin: 'admin.html'
+    admin: 'admin.html',
+    item: 'item.html',
+    categories: 'categories.html'
   
 };
 
@@ -78,7 +84,9 @@ function loadJS(src) {
 
 function loadSPA() {
     const token = localStorage.getItem('jwt_token');
-    let route = location.hash.slice(1);
+    let hash = location.hash.slice(1);
+    let route = hash.split('?')[0];
+    
 
     if (!route) {
         if (!token) {
@@ -105,17 +113,17 @@ function loadSPA() {
 
 $(window).on('hashchange', function () {
     const token = localStorage.getItem('jwt_token');
-    const route = location.hash.slice(1);
+    const hash = location.hash.slice(1);
+    const [route] = hash.split('?'); 
 
-  
     if (!token && route !== 'login' && route !== 'register') {
         window.location.hash = '#login';
         return; 
-        
     }
 
-    loadPage(route);
+    loadPage(route); 
 });
+
 
 
 $(document).ready(function () {

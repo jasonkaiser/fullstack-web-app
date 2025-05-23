@@ -1,4 +1,4 @@
-.home-container{
+.categories-container{
     display: flex;
     justify-content: center;
     width: 95%;
@@ -40,7 +40,8 @@
       
 }
 
-.report-button {
+.report-button{
+
     width: 15%;
     height: 6vh;
     background: var(--primary-color);
@@ -51,15 +52,7 @@
     color: white;
     font-size: 1.2rem;
     font-weight: bold;
-    display: flex;              
-    justify-content: center;     
-    align-items: center;        
-    text-decoration: none;       
-    transition: color 0.3s ease; 
-}
 
-.report-button:hover {
-    color: black;              
 }
 
 
@@ -129,7 +122,6 @@
     background-size: cover;
     background-position: center;
 }
-
 
 .card-text {
     display: flex;

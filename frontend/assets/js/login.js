@@ -1,5 +1,4 @@
 $(document).ready(function() {
-    // Initialize navbar
     Utils.updateNavbar();
 
     $('.btn-primary').click(function(e) {
@@ -21,9 +20,11 @@ $(document).ready(function() {
             localStorage.setItem('user_id', response.data.id);
             Utils.updateNavbar();
             window.location.hash = '#home'; 
+            Toast.success("Welcome back")
         }, function(xhr) {
             const error = xhr.responseJSON?.error || 'Login failed';
             Utils.showError('#login-error', error);
+            Toast.error("Login Failed");
         });
     });
 });

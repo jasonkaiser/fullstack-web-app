@@ -92,6 +92,11 @@
     align-items: center;
     padding: 4em;
     margin-bottom: 3em;
+
+    background-size: cover;     
+    background-repeat: no-repeat;  
+    background-position: center;  
+    
 }
 
 h1{
