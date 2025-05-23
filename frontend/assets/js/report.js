@@ -1,72 +1,134 @@
-document.querySelector('form').addEventListener('submit', function(e) {
-    e.preventDefault();
+const availableImages = [
+  'frontend/assets/images/preview1.jpg',
+  'frontend/assets/images/preview2.jpg',
+  'frontend/assets/images/preview3.jpg',
+  'frontend/assets/images/preview4.jpg',
+  'frontend/assets/images/preview5.jpg',
+  'frontend/assets/images/preview6.jpg',
+  'frontend/assets/images/preview7.jpeg',
+  'frontend/assets/images/preview8.jpg',
+  'frontend/assets/images/preview9.jpeg'
+];
 
-    const reportType = document.getElementById('reportType').value;
-    const title = document.getElementById('title').value.trim();
-    const description = document.getElementById('description').value.trim();
-    const category = document.getElementById('category').value;
-    const location = document.getElementById('location').value.trim();
-    const date = document.getElementById('date').value;
+const imageSelector = document.getElementById('imageSelector');
+const selectedImageInput = document.getElementById('selectedImage');
+const previewImage = document.getElementById('previewImage');
 
-    const userID = localStorage.getItem('user_id');
-    const token = localStorage.getItem('jwt_token');
+availableImages.forEach(src => {
+  const img = document.createElement('img');
+  img.src = src;
+  img.className = 'img-thumbnail';
+  img.style.width = '87px';
+  img.style.height = '80px';
+  img.style.cursor = 'pointer';
 
-    const categoryMap = {
-        'electronics': 1,
-        'pets': 2,
-        'documents': 3,
-        'other': 4
-    };
-    const categoryID = categoryMap[category];
+  img.addEventListener('click', () => {
+    document.querySelectorAll('#imageSelector img').forEach(i => {
+      i.classList.remove('border', 'border-primary');
+    });
 
-    if (!userID || !token) {
-        alert('You must be logged in to submit a report.');
-        return;
-    }
+    img.classList.add('border', 'border-primary');
+    selectedImageInput.value = src;
+    previewImage.src = src;
+    previewImage.classList.remove('d-none');
+  });
 
-    if (!reportType) {
-        alert('Please select a report type.');
-        return;
-    }
+  imageSelector.appendChild(img);
+});
 
-    const data = {
-        userID: parseInt(userID),
-        categoryID: categoryID,
-        itemName: title,
-        description: description,
-        location: location,
+document.querySelector('form').addEventListener('submit', function (e) {
+  e.preventDefault();
 
-    };
+  const reportType = document.getElementById('reportType').value;
+  const title = document.getElementById('title').value.trim();
+  const description = document.getElementById('description').value.trim();
+  let category = document.getElementById('category').value;
+  const location = document.getElementById('location').value.trim();
+  const date = document.getElementById('date').value;
 
-    let url = '';
-    if (reportType === 'lost') {
-        url = '/lost-items';
-    } else if (reportType === 'found') {
-        url = '/found-items';
-    } else {
-        alert('Invalid report type selected.');
-        return;
-    }
+  const userID = localStorage.getItem('user_id');
+  const token = localStorage.getItem('jwt_token');
 
-    fetch('backend/rest' + url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
-        },
-        body: JSON.stringify(data)
+  const categoryMap = {
+    'electronics': 1,
+    'wallets': 2,
+    'clothing': 3,
+    'keys': 4,
+    'documents': 5,
+    'pets': 6,
+    'jewelry': 7,
+    'toys': 8,
+    'others': 9
+  };
+
+  category = category.toLowerCase();
+  const categoryID = categoryMap[category];
+
+  if (!userID || !token) {
+    Toast.error('You must be logged in to submit a report.');
+    return;
+  }
+
+  if (!reportType) {
+    Toast.error('Please select a report type.');
+    return;
+  }
+
+  if (!categoryID) {
+    Toast.error('Please select a valid category.');
+    return;
+  }
+
+  if (!title) {
+    Toast.error('Please enter the item title.');
+    return;
+  }
+
+  const selectedImage = selectedImageInput.value;
+
+  const data = {
+    userID: parseInt(userID),
+    categoryID: categoryID,
+    itemName: title,
+    description: description,
+    location: location,
+    image: selectedImage
+  };
+
+  let url = '';
+  if (reportType === 'lost') {
+    url = '/lost-items';
+  } else if (reportType === 'found') {
+    url = '/found-items';
+  } else {
+    Toast.error('Invalid report type selected.');
+    return;
+  }
+
+  fetch('backend/rest' + url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token
+    },
+    body: JSON.stringify(data)
+  })
+    .then(response => {
+      if (!response.ok) {
+        return response.json().then(err => { throw err; });
+      }
+      return response.json();
     })
     .then(response => {
-        if (!response.ok) {
-            return response.json().then(err => { throw err; });
-        }
-        return response.json();
-    })
-    .then(response => {
-        alert('Report submitted successfully!');
-        document.querySelector('form').reset();
+      Toast.success('Report submitted successfully!');
+      document.querySelector('form').reset();
+      selectedImageInput.value = '';
+      previewImage.classList.add('d-none');
+      document.querySelectorAll('#imageSelector img').forEach(i => {
+        i.classList.remove('border', 'border-primary');
+      });
     })
     .catch(error => {
-        alert('Failed to submit report: ' + (error.error || error.message || 'Unknown error'));
+      Toast.error('Failed to submit report: ' + (error.error || error.message || 'Unknown error'));
     });
 });

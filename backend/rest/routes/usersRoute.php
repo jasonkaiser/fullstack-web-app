@@ -52,7 +52,7 @@ Flight::route('GET /users', function(){
  * )
  */
 Flight::route('GET /users/@id', function($id){ 
-    Flight::authMiddleware()->authorizeRole(Roles::ADMIN);
+    Flight::authMiddleware()->authorizeRole([Roles::ADMIN, Roles::USER]);
     Flight::json(Flight::usersService()->getById($id));
 });
 
@@ -111,7 +111,7 @@ Flight::route('POST /users', function(){
  * )
  */
 Flight::route('PUT /users/@id', function($id){
-    Flight::authMiddleware()->authorizeRole(Roles::ADMIN);
+    Flight::authMiddleware()->authorizeRole([Roles::ADMIN, Roles::USER]);
     $data = Flight::request()->data->getData();
     Flight::json(Flight::usersService()->update($id, $data));
 });

@@ -10,6 +10,8 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Montserrat:wght@400;600&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-notify/dist/simple-notify.css" />
+
     </head>
     <body>
         
@@ -26,17 +28,17 @@
                 <li><a href="#report">Report</a></li>
                 <li class="dropdown">
                     <a href="#categories" class="dropbtn">Categories</a>
-                    <ul class="dropdown-content">
-                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-mobile"></i> Electronics</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-wallet"></i> Wallets</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-shirt"></i> Clothing</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-key"></i> Keys</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-file"></i> Documents</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-dog"></i> Pets</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-ring"></i> Jewelry</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-gamepad"></i> Toys</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-angles-right"></i> Others</a></li>
-                    </ul>
+                <ul class="dropdown-content">
+                    <li><a class="dropdown-item category-link" href="#" data-category="Electronics"><i class="fa-solid fa-mobile"></i> Electronics</a></li>
+                    <li><a class="dropdown-item category-link" href="#" data-category="Wallets"><i class="fa-solid fa-wallet"></i> Wallets</a></li>
+                    <li><a class="dropdown-item category-link" href="#" data-category="Clothing"><i class="fa-solid fa-shirt"></i> Clothing</a></li>
+                    <li><a class="dropdown-item category-link" href="#" data-category="Keys"><i class="fa-solid fa-key"></i> Keys</a></li>
+                    <li><a class="dropdown-item category-link" href="#" data-category="Documents"><i class="fa-solid fa-file"></i> Documents</a></li>
+                    <li><a class="dropdown-item category-link" href="#" data-category="Pets"><i class="fa-solid fa-dog"></i> Pets</a></li>
+                    <li><a class="dropdown-item category-link" href="#" data-category="Jewelry"><i class="fa-solid fa-ring"></i> Jewelry</a></li>
+                    <li><a class="dropdown-item category-link" href="#" data-category="Toys"><i class="fa-solid fa-gamepad"></i> Toys</a></li>
+                    <li><a class="dropdown-item category-link" href="#" data-category="Others"><i class="fa-solid fa-angles-right"></i> Others</a></li>
+                </ul>
                 </li>
         
                 <li><a href="#nearbyitems">Nearby Items</a></li>
@@ -49,13 +51,17 @@
         <div class="app-container" id="app"></div>
         
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/simple-notify/dist/simple-notify.min.js"></script>
         <script src="frontend/utils/rest-client.js"></script>
         <script src="frontend/utils/utils.js"></script>
-        <script type="module" src="frontend/assets/js/app.js?v=10" defer></script>
+        <script src="frontend/utils/toast.js"></script>
+        <script type="module" src="frontend/assets/js/app.js?v=11" defer></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <script type="module" src="frontend/assets/js/register.js" defer></script>
         <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+      
+
         <script>
             AOS.init();
 

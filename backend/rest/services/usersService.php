@@ -47,12 +47,21 @@ class UsersService extends BaseService
     } 
 
 
-     public function update($id, $data) {
+    public function update($id, $data) {
         if (empty($data)) {
             throw new InvalidArgumentException("Update data cannot be empty.");
         }
 
+        if (!empty($data['password'])) {
+            $data['passwordHash'] = password_hash($data['password'], PASSWORD_BCRYPT);
+            unset($data['password']);
+        }
+
+        error_log("Updating user ID $id with data: " . json_encode($data));
         return $this->dao->updateUser($data, $id);
     }
+
+
+
 }
 ?>

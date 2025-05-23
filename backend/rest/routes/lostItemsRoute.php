@@ -130,7 +130,8 @@ Flight::route('GET /lost-items/user/@user', function($user){
  *             @OA\Property(property="categoryID", type="integer", example=1),
  *             @OA\Property(property="itemName", type="string", example="Wallet"),
  *             @OA\Property(property="description", type="string", example="Black leather wallet"),
- *             @OA\Property(property="location", type="string", example="Cafeteria")
+ *             @OA\Property(property="location", type="string", example="Cafeteria"),
+ *             @OA\Property(property="image", type="string", example="wallet.png", description="Filename of predefined image from assets") 
  *         )
  *     ),
  *     @OA\Response(
@@ -163,7 +164,8 @@ Flight::route('POST /lost-items', function(){
  *             required={"itemName"},
  *             @OA\Property(property="itemName", type="string", example="Updated Wallet"),
  *             @OA\Property(property="description", type="string", example="Updated description"),
- *             @OA\Property(property="location", type="string", example="New location")
+ *             @OA\Property(property="location", type="string", example="New location"),
+ *             @OA\Property(property="image", type="string", example="wallet.png", description="Filename of predefined image from assets")
  *         )
  *     ),
  *     @OA\Response(
