@@ -21,6 +21,7 @@
  * )
  */
 Flight::route('GET /claim-requests', function(){
+    Flight::authMiddleware()->authorizeRole(Roles::ADMIN);
     $status = Flight::request()->query['status'] ?? null;
     Flight::json(Flight::claimRequestsService()->getClaimRequests($status));
 });
@@ -44,6 +45,7 @@ Flight::route('GET /claim-requests', function(){
  * )
  */
 Flight::route('GET /claim-requests/@id', function($id){ 
+    Flight::authMiddleware()->authorizeRole(Roles::ADMIN);
     Flight::json(Flight::claimRequestsService()->getById($id));
 });
 
@@ -68,6 +70,7 @@ Flight::route('GET /claim-requests/@id', function($id){
  * )
  */
 Flight::route('POST /claim-requests', function(){
+    Flight::authMiddleware()->authorizeRoles([Roles::ADMIN, Roles::USER]);
     $data = Flight::request()->data->getData();
     Flight::json(Flight::claimRequestsService()->add($data));
 });
@@ -99,6 +102,7 @@ Flight::route('POST /claim-requests', function(){
  * )
  */
 Flight::route('PUT /claim-requests/@id', function($id){
+    Flight::authMiddleware()->authorizeRole(Roles::ADMIN);
     $data = Flight::request()->data->getData();
     Flight::json(Flight::claimRequestsService()->update($id, $data));
 });
@@ -122,6 +126,7 @@ Flight::route('PUT /claim-requests/@id', function($id){
  * )
  */
 Flight::route('DELETE /claim-requests/@id', function($id){
+    Flight::authMiddleware()->authorizeRole(Roles::ADMIN);
     Flight::json(Flight::claimRequestsService()->delete($id));
 });
 ?>
