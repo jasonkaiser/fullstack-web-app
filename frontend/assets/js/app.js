@@ -1,6 +1,7 @@
 
 $(document).ready(function () {
-    updateNavbar();
+    Utils.updateNavbar();
+    
 });
 
 const config = {
@@ -17,7 +18,8 @@ const routes = {
     login: 'login.html',
     admin: 'admin.html',
     item: 'item.html',
-    categories: 'categories.html'
+    categories: 'categories.html',
+    nearbyitems: 'nearbyitems.html'
   
 };
 
@@ -31,10 +33,9 @@ function loadPage(route) {
     console.log('JWT Token:', token);
     console.log('User Role:', role);
 
-
     if (route === 'admin') {
         if (!token || role !== 'Admin') {
-            alert('Access denied. Admins only.');
+            Toast.error('Access denied. Admins only.');
             window.location.hash = '#home';
             return;
         }
@@ -50,6 +51,19 @@ function loadPage(route) {
                 app.html(html);
                 loadCSS(cssPath);
                 loadJS(jsPath);
+
+              
+                setTimeout(() => {
+                    if (route === 'report') {  
+                        if (typeof window.initMap === 'function') {
+                            window.initMap();
+                        }
+                    } else if (route === 'nearbyitems') {  
+                        if (typeof window.initNearbyMap === 'function') {
+                            window.initNearbyMap();
+                        }
+                    }
+                }, 500); 
             })
             .fail((error) => {
                 console.error('Failed to load page:', error);
@@ -132,7 +146,7 @@ $(document).ready(function () {
     });
 
     loadSPA(); 
-    updateNavbar();
+    Utils.updateNavbar();
 });
 
 $(document).on('click', '#logout-link', function (e) {
@@ -140,5 +154,5 @@ $(document).on('click', '#logout-link', function (e) {
     localStorage.removeItem('jwt_token');
     localStorage.removeItem('user_role');
     window.location.hash = '#home';
-    updateNavbar();
+    Utils.updateNavbar();
 });

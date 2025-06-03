@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
     const userId = localStorage.getItem('user_id');
     const jwtToken = localStorage.getItem('jwt_token');
 
@@ -13,12 +12,8 @@ $(document).ready(function () {
 
     function loadProfileData() {
         RestClient.get(`rest/users/${userId}`, function (response) {
-            if (response) {
-                updateProfileUI(response);
-            } else {
-                Toast.error("Failed to load profile data");
-                console.error('Failed to load profile data');
-            }
+            if (response) updateProfileUI(response);
+            else Toast.error("Failed to load profile data");
         }, function (error) {
             console.error('Error loading profile:', error);
             Toast.error("Error loading profile data");
@@ -32,10 +27,10 @@ $(document).ready(function () {
     function updateProfileUI(userData) {
         $('.profile-name').text(userData.name || 'Not provided');
         $('.user-name').text(`@${userData.email?.split('@')[0]}` || '@username');
-
         $('.info-name').text(userData.name || 'Not provided');
         $('.info-email').text(userData.email || 'Not provided');
-        $('.info-password').text('********');
+        $('.info-phone').text(userData.phone_number || 'Not provided');
+        $('.info-location').text(userData.location || 'Not provided');
         $('.info-verified').text(userData.verified ? "Verified" : "Not Verified");
         $('.card-avatar').css('background-image', 'url("frontend/assets/images/avatar.png")');
     }
@@ -43,25 +38,19 @@ $(document).ready(function () {
     function loadUserReports() {
         RestClient.get(`rest/lost-items/user/${userId}`, function (lostReports) {
             renderReports(lostReports, '.lost-reports');
-        }, function (error) {
-            console.error('Error loading lost reports:', error);
-            Toast.info("No Lost Item reports found");
+        }, function () {
             $('.lost-reports').html('<div class="no-reports-message">No lost reports found</div>');
         });
 
         RestClient.get(`rest/found-items/user/${userId}`, function (foundReports) {
             renderReports(foundReports, '.found-reports');
-        }, function (error) {
-            console.error('Error loading found reports:', error);
-            Toast.info("No Found Item reports found");
+        }, function () {
             $('.found-reports').html('<div class="no-reports-message">No found reports found</div>');
         });
     }
 
     function renderReports(reports, containerSelector) {
-        const $container = $(containerSelector);
-        $container.empty();
-
+        const $container = $(containerSelector).empty();
         if (!reports || reports.length === 0) {
             $container.append('<div class="no-reports-message">No reports found</div>');
             return;
@@ -94,34 +83,50 @@ $(document).ready(function () {
         });
     }
 
- 
-    $(document).on("click", ".edit-profile-btn, .edit-info-btn", function() {
-        const $btn = $(this);
-        $btn.prop("disabled", true);
-        
-        RestClient.get(`rest/users/${userId}`, function(user) {
+    $(document).on("click", ".edit-profile-btn, .edit-info-btn", function () {
+        const $btn = $(this).prop("disabled", true);
+
+        RestClient.get(`rest/users/${userId}`, function (user) {
             $('#editName').val(user.name || '');
             $('#editEmail').val(user.email || '');
+            $('#editPhone').val(user.phone_number || '');
+            $('#editLocation').val(user.location || '');
             $('#editPassword').val('');
-            
             editProfileModal.show();
             $btn.prop("disabled", false);
-        }, function(error) {
+        }, function (error) {
             Toast.error("Failed to load profile data for editing");
             console.error(error);
             $btn.prop("disabled", false);
         });
     });
 
+    $('#editPhone').on('input', function () {
+        const clean = this.value.replace(/[^0-9+ ]/g, '');
+        if (this.value !== clean) {
+            this.value = clean;
+            Toast.info("Only numbers, spaces and '+' are allowed.");
+        }
+    });
+
+    $('#editLocation').on('input', function () {
+        const clean = this.value.replace(/[^a-zA-ZčćžšđČĆŽŠĐ\s]/g, '');
+        if (this.value !== clean) {
+            this.value = clean;
+            Toast.info("Only letters and spaces are allowed in location.");
+        }
+    });
+
     $('#profileForm').submit(function (e) {
         e.preventDefault();
         const $form = $(this);
-        const $submitBtn = $form.find("button[type='submit']");
-        $submitBtn.prop("disabled", true);
-        
+        const $submitBtn = $form.find("button[type='submit']").prop("disabled", true);
+
         const updatedData = {
             name: $('#editName').val().trim(),
-            email: $('#editEmail').val().trim()
+            email: $('#editEmail').val().trim(),
+            phone_number: $('#editPhone').val().trim(),
+            location: $('#editLocation').val().trim()
         };
 
         const newPassword = $('#editPassword').val().trim();
@@ -129,42 +134,40 @@ $(document).ready(function () {
             updatedData.password = newPassword;
         }
 
-        if (!updatedData.name) {
-            Toast.error("Please enter your name");
+        if (!updatedData.name || !updatedData.email) {
+            Toast.error("Please fill all required fields.");
             $submitBtn.prop("disabled", false);
             return;
         }
 
-        if (!updatedData.email) {
-            Toast.error("Please enter your email");
+        if (updatedData.phone_number && !/^[0-9+ ]{6,20}$/.test(updatedData.phone_number)) {
+            Toast.error("Phone number is invalid. Use only digits and optional '+'");
             $submitBtn.prop("disabled", false);
             return;
         }
 
-        RestClient.put(`rest/users/${userId}`, updatedData, function (response) {
+        if (updatedData.location && !/^[a-zA-ZčćžšđČĆŽŠĐ\s]{2,50}$/.test(updatedData.location)) {
+            Toast.error("Location is invalid. Use only letters and spaces.");
+            $submitBtn.prop("disabled", false);
+            return;
+        }
+
+        RestClient.put(`rest/users/${userId}`, updatedData, function () {
             Toast.success("Profile updated successfully!");
             editProfileModal.hide();
             loadProfileData();
             $submitBtn.prop("disabled", false);
         }, function (error) {
             console.error('Error updating profile:', error);
-            if (error.status === 400) {
-                Toast.error("Invalid data. Please check your inputs.");
-            } else {
-                Toast.error("Failed to update profile. Please try again.");
-            }
+            Toast.error("Failed to update profile. Please try again.");
             $submitBtn.prop("disabled", false);
         });
     });
 
-    $(document).on('click', '[data-bs-dismiss="modal"]', function() {
-        editProfileModal.hide();
+    $('#editProfileModal').on('hidden.bs.modal', function () {
+        $('#profileForm')[0].reset();
     });
 
     loadProfileData();
     loadUserReports();
-
-    $('#editProfileModal').on('hidden.bs.modal', function () {
-        $('#profileForm')[0].reset();
-    });
 });

@@ -6,14 +6,51 @@ $(document).ready(function() {
         const email = $('#email').val().trim();
         const password = $('#password').val().trim();
         const confirmPassword = $('#confirm-password').val().trim();
+        let isValid = true;
 
-        if (!name || !email || !password || !confirmPassword) {
-            Utils.showError('#register-error', 'All fields are required');
-            return;
+        $('.error-text').remove();
+        $('#register-error').text('');
+
+        if (!name) {
+            showFieldError('name', 'Name is required');
+            isValid = false;
+        } else if (name.length < 2) {
+            showFieldError('name', 'Name must be at least 2 characters');
+            isValid = false;
         }
 
-        if (password !== confirmPassword) {
-            Utils.showError('#register-error', 'Passwords do not match');
+        if (!email) {
+            showFieldError('email', 'Email is required');
+            isValid = false;
+        } else if (!isValidEmail(email)) {
+            showFieldError('email', 'Invalid email format');
+            isValid = false;
+        }
+
+        if (!password) {
+            showFieldError('password', 'Password is required');
+            isValid = false;
+        } else if (password.length < 8) {
+            showFieldError('password', 'Password must be at least 8 characters');
+            isValid = false;
+        } else if (!/[A-Z]/.test(password)) {
+            showFieldError('password', 'Password must contain at least one uppercase letter');
+            isValid = false;
+        } else if (!/[0-9]/.test(password)) {
+            showFieldError('password', 'Password must contain at least one number');
+            isValid = false;
+        }
+
+        if (!confirmPassword) {
+            showFieldError('confirm-password', 'Please confirm your password');
+            isValid = false;
+        } else if (password !== confirmPassword) {
+            showFieldError('confirm-password', 'Passwords do not match');
+            isValid = false;
+        }
+
+        if (!isValid) {
+            Toast.error("Please fix the errors");
             return;
         }
 
@@ -38,4 +75,13 @@ $(document).ready(function() {
         e.preventDefault();
         window.location.hash = '#login';
     });
+
+    function isValidEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    }
+
+    function showFieldError(fieldId, message) {
+        $(`#${fieldId}`).after(`<div class="error-text text-danger small mt-1">${message}</div>`);
+    }
 });

@@ -9,11 +9,13 @@ $(document).ready(function () {
     }
 
     const endpoint = `rest/${type}-items/${id}`;
-    const status = type.charAt(0).toUpperCase() + type.slice(1); 
+    const status = type.charAt(0).toUpperCase() + type.slice(1);
 
     const bgColor = status === 'Lost' ? 'rgba(255, 141, 141, 0.26)' : 'rgba(173, 255, 149, 0.26)';
     const borderColor = status === 'Lost' ? '#FF4B4B' : '#00A13E';
     const textColor = status === 'Lost' ? '#FF4B4B' : '#00A13E';
+
+    let currentUser = null;
 
     RestClient.get(endpoint, function(item) {
         $('#item-page h1').text(item.itemName);
@@ -44,10 +46,16 @@ $(document).ready(function () {
 
         if (item.userID) {
             RestClient.get(`rest/users/${item.userID}`, function(user) {
+                currentUser = user;
+
                 $('.contact-name').text(user.name || 'Unknown User');
-                if (user.image) {
-                    $('.profile-photo').css('background-image', `url('${user.image}')`);
-                }
+              
+                $('.contact-button').on('click', function () {
+                    $('#user-phone').text(user.phone_number || 'Not provided');
+                    $('#user-location').text(user.location || 'Not provided');
+                    $('#contactModal').modal('show');
+                });
+
             }, function() {
                 $('.contact-name').text('Unknown User');
             });
@@ -55,7 +63,7 @@ $(document).ready(function () {
             $('.contact-name').text('Unknown User');
         }
 
-        $('#contact-btn').css({
+        $('.contact-button').css({
             'background-color': borderColor,
             'border': `1px solid ${borderColor}`,
             'color': '#fff'

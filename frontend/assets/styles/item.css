@@ -170,17 +170,22 @@ hr{
     width: 20%;
 }
 
-.profile-photo{
-
+.profile-photo {
+    position: relative; 
     width: 106px;
     height: 106px;
-    background: url(/frontend/assets/images/avatar.JPG);
-    background-position: center;
-    background-size: cover;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 50px;
-
+    border-radius: 50%;           
+    background-image: url('/frontend/assets/images/useravatar.png'); 
+    background-repeat: no-repeat;
+    background-position: center;  
+    background-size: cover;      
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25); 
+    border: 2px solid #CDCDCD;  
+    display: block;              
 }
+
+
+
 
 .contact-name{
     font-size: 1.1rem;

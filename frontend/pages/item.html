@@ -30,13 +30,30 @@
 
 
         <div class="contact-container"  data-aos="fade-up" data-aos-duration="1200">
-            <div class="profile-photo"></div>
+            <div class="profile-photo" style="background-image: url('/frontend/assets/images/useravatar.png');"></div>
             <div class="profile-info">
                 <h1 class="contact-name">Jason Kaiser</h1>
                 <button class="contact-button">Contact Me</button>
             </div>
         </div>
     </div>
+
+
+    <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="contactModalLabel">Contact Information</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p><strong>Phone:</strong> <span id="user-phone">Loading...</span></p>
+            <p><strong>Location:</strong> <span id="user-location">Loading...</span></p>
+        </div>
+        </div>
+    </div>
+    </div>
+
 
     
 </div>

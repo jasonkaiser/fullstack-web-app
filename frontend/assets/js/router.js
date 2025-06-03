@@ -7,5 +7,6 @@ export const routes = {
     'admin' : 'admin.html',
     'login' : 'login.html',
     'register' : 'register.html',
-    'item' : 'item.html'
+    'item' : 'item.html',
+    'nearbyitems' : 'nearbyitems.html'
 }

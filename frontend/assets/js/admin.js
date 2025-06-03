@@ -1,12 +1,12 @@
 $(document).ready(function () {
-    // Check authentication first
+
     if (!Utils.isAuthenticated() || !Utils.isAdmin()) {
         Toast.error("You need to be logged in as admin to access this page.");
         window.location.hash = "#login";
         return;
     }
 
-    // Initialize modals
+
     const profileModal = new bootstrap.Modal($("#viewProfileModal")[0]);
     const editUserModal = new bootstrap.Modal($("#editUserModal")[0]);
     const viewLostItemModal = new bootstrap.Modal($("#viewLostItemModal")[0]);
@@ -14,12 +14,12 @@ $(document).ready(function () {
     const viewFoundItemModal = new bootstrap.Modal($("#viewFoundItemModal")[0]);
     const editFoundItemModal = new bootstrap.Modal($("#editFoundItemModal")[0]);
 
-    // Initial data load
+   
     loadUsers();
     loadLostItems();
     loadFoundItems();
 
-    // User actions
+
     $(document).on("click", "#users-table-body .btn-info", function () {
         const $btn = $(this);
         $btn.prop("disabled", true);
@@ -104,7 +104,7 @@ $(document).ready(function () {
         }
     });
 
-    // Lost Items actions
+ 
     $(document).on("click", "#lost-items-table-body .btn-info", function () {
         const $btn = $(this);
         $btn.prop("disabled", true);
@@ -189,7 +189,7 @@ $(document).ready(function () {
         }
     });
 
-    // Found Items actions
+  
     $(document).on("click", "#found-items-table-body .btn-info", function () {
         const $btn = $(this);
         $btn.prop("disabled", true);
@@ -274,7 +274,7 @@ $(document).ready(function () {
         }
     });
 
-    // Data loading functions
+   
     function loadUsers() {
         RestClient.get("rest/users", function (users) {
             const $tbody = $("#users-table-body");

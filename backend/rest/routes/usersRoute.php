@@ -101,7 +101,9 @@ Flight::route('POST /users', function(){
  *             required={"name", "email"},
  *             @OA\Property(property="name", type="string", example="Updated Name"),
  *             @OA\Property(property="email", type="string", example="new.email@example.com"),
- *             @OA\Property(property="passwordHash", type="string", example="newpassword123")
+ *             @OA\Property(property="passwordHash", type="string", example="newpassword123"),
+ *             @OA\Property(property="location", type="string", example="Los Angeles"),
+ *             @OA\Property(property="phone_number", type="string", example="+1-555-765-4321")
  *         )
  *     ),
  *     @OA\Response(

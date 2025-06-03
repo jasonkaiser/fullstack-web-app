@@ -133,7 +133,9 @@ Flight::route('GET /found-items/user/@user', function($user){
  *             @OA\Property(property="itemName", type="string", example="Wallet"),
  *             @OA\Property(property="description", type="string", example="Black leather wallet"),
  *             @OA\Property(property="location", type="string", example="Main lobby"),
- *             @OA\Property(property="image", type="string", example="wallet.png", description="Filename of predefined image from assets")
+ *             @OA\Property(property="image", type="string", example="wallet.png"),
+ *             @OA\Property(property="latitude", type="number", format="float", example=43.8563),
+ *             @OA\Property(property="longitude", type="number", format="float", example=18.4131)
  *         )
  *     ),
  *     @OA\Response(
@@ -147,6 +149,7 @@ Flight::route('POST /found-items', function(){
     $data = Flight::request()->data->getData();
     Flight::json(Flight::foundItemsService()->add($data));
 });
+
 
 /**
  * @OA\Put(
@@ -167,7 +170,9 @@ Flight::route('POST /found-items', function(){
  *             @OA\Property(property="itemName", type="string", example="Updated Wallet"),
  *             @OA\Property(property="description", type="string", example="Updated description"),
  *             @OA\Property(property="location", type="string", example="New location"),
- *             @OA\Property(property="image", type="string", example="wallet.png", description="Filename of predefined image from assets")
+ *             @OA\Property(property="image", type="string", example="wallet.png"),
+ *             @OA\Property(property="latitude", type="number", format="float", example=43.8563),
+ *             @OA\Property(property="longitude", type="number", format="float", example=18.4131)
  *         )
  *     ),
  *     @OA\Response(
@@ -181,6 +186,7 @@ Flight::route('PUT /found-items/@id', function($id){
     $data = Flight::request()->data->getData();
     Flight::json(Flight::foundItemsService()->update($id, $data));
 });
+
 
 
 /**
