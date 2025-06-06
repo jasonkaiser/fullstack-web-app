@@ -1,7 +1,7 @@
 let Constants = {
     get_api_base_url: function() {
         if(location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
-            return 'http://localhost/fullstack-web-app/backend/';
+            return 'backend/';
         } else {
             return 'https://shark-app-5hzgo.ondigitalocean.app/backend/';
         }

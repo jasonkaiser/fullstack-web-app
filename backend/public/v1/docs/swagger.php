@@ -1,6 +1,7 @@
 <?php
 require __DIR__ . '/../../../rest/vendor/autoload.php';
 
+
 define('LOCALSERVER', 'http://localhost/fullstack-web-app/backend/rest');
 define('PRODSERVER', 'https://shark-app-5hzgo.ondigitalocean.app/backend/rest');
 
