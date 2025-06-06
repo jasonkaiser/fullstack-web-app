@@ -36,6 +36,11 @@ use Firebase\JWT\Key;
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
+
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+
 error_reporting(E_ALL);
 
 Flight::route('GET /', function() {
