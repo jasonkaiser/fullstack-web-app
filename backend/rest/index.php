@@ -49,9 +49,11 @@ Flight::route('GET /', function() {
 });
 
 Flight::route('/*', function() {
-    if(
-        strpos(Flight::request()->url, '/auth/login') === 0 ||
-        strpos(Flight::request()->url, '/auth/register') === 0
+    $url = Flight::request()->url;
+    if (
+        strpos($url, '/auth/login') === 0 ||
+        strpos($url, '/auth/register') === 0 ||
+        strpos($url, '/public/v1/docs') === 0 // <-- allow docs access
     ) {
         return TRUE;
     } else {
