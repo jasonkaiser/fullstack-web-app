@@ -1,7 +1,8 @@
 RewriteEngine On
 
 # Preserve Authorization headers
-RewriteRule ^(.*)$ - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+RewriteCond %{HTTP:Authorization} ^(.*)
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%1]
 
 # Only rewrite if not a real file or directory
 RewriteCond %{REQUEST_FILENAME} !-f
