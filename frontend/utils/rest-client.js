@@ -1,14 +1,11 @@
 let Constants = {
-    get_api_base_url: function(){
-
-            if(location.hostname == 'localhost'){
-                return 'backend/'
-            } else {
-                return 'https://shark-app-5hzgo.ondigitalocean.app/backend/'
-            }
-
+    get_api_base_url: function() {
+        if(location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+            return 'http://localhost/fullstack-web-app/backend/';
+        } else {
+            return 'https://shark-app-5hzgo.ondigitalocean.app/backend/';
+        }
     },
-    // PROJECT_BASE_URL: "backend/", // Relative path since you're using 'backend/' in your requests
     USER_ROLE: "User",
     ADMIN_ROLE: "Admin"
 };
