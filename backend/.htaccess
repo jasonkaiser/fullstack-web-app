@@ -1,0 +1,11 @@
+RewriteEngine On
+
+# Preserve Authorization headers
+RewriteRule ^(.*)$ - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+# Only rewrite if not a real file or directory
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Route all requests to rest/index.php
+RewriteRule ^(.*)$ rest/index.php [QSA,L]
