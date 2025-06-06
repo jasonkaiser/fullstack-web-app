@@ -1,8 +1,8 @@
 RewriteEngine On
 
-# Preserve Authorization headers
-RewriteCond %{HTTP:Authorization} ^(.*)
-RewriteRule .* - [E=HTTP_AUTHORIZATION:%1]
+# Ensure Authorization headers are passed to PHP
+RewriteCond %{HTTP:Authorization} .
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
 # Only rewrite if not a real file or directory
 RewriteCond %{REQUEST_FILENAME} !-f

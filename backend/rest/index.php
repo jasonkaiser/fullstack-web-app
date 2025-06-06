@@ -39,8 +39,24 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
+header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE");
+header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With, X-Authorization");
+header("Access-Control-Expose-Headers: Authorization");
+
+
+if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
+    $authHeader = $_SERVER['HTTP_AUTHORIZATION'];
+} elseif (isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
+    $authHeader = $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
+} elseif (function_exists('apache_request_headers')) {
+    $headers = apache_request_headers();
+    $authHeader = isset($headers['Authorization']) ? $headers['Authorization'] : null;
+}
+
+$token = Flight::request()->getHeader("Authorization");
+if (empty($token) && isset($authHeader)) {
+    $token = $authHeader;
+}
 
 error_reporting(E_ALL);
 
@@ -49,16 +65,21 @@ Flight::route('GET /', function() {
 });
 
 Flight::route('/*', function() {
-    if(
-        strpos(Flight::request()->url, '/auth/login') === 0 ||
-        strpos(Flight::request()->url, '/auth/register') === 0
+    $url = Flight::request()->url;
+    if (
+        strpos($url, '/auth/login') === 0 ||
+        strpos($url, '/auth/register') === 0 ||
+        strpos($url, '/public/v1/docs') === 0 || // allow docs UI
+        strpos($url, '/public/v1/docs/swagger.php') === 0 // allow docs JSON
     ) {
         return TRUE;
     } else {
         try {
             $token = Flight::request()->getHeader("Authorization");
-            if(Flight::authMiddleware()->verifyToken($token))
+            if($token && Flight::authMiddleware()->verifyToken($token))
                 return TRUE;
+            else
+                Flight::halt(401, "Missing authentication header");
         } catch (\Exception $e) {
             Flight::halt(401, $e->getMessage());
         }
