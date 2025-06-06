@@ -3,7 +3,7 @@ let Constants = {
         if(location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
             return 'backend/';
         } else {
-            return 'https://shark-app-5hzgo.ondigitalocean.app/backend/';
+            return 'https://lost-and-found-76z94.ondigitalocean.app/backend/';
         }
     },
     USER_ROLE: "User",
