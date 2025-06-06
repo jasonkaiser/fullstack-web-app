@@ -2,8 +2,8 @@
 require_once dirname(__DIR__) . '/vendor/autoload.php'; 
 
 
-require_once __DIR__.'data/roles.php';
-require_once __DIR__ . "middleware/authMiddleware.php";
+require_once __DIR__.'/../data/roles.php';
+require_once __DIR__ . "/../middleware/authMiddleware.php";
 
 
 
@@ -18,19 +18,19 @@ Flight::register('authMiddleware', 'AuthMiddleware');
 
 
 
-require_once __DIR__ . 'rest/services/usersService.php';
-require_once __DIR__ . 'rest/services/categoriesService.php';
-require_once __DIR__ . 'rest/services/claimRequestsService.php';
-require_once __DIR__ . 'rest/services/foundItemsService.php';
-require_once __DIR__ . 'rest/services/lostItemsService.php';
-require_once __DIR__ . 'rest/services/authService.php';
+require_once __DIR__ . '/services/usersService.php';
+require_once __DIR__ . '/services/categoriesService.php';
+require_once __DIR__ . '/services/claimRequestsService.php';
+require_once __DIR__ . '/services/foundItemsService.php';
+require_once __DIR__ . '/services/lostItemsService.php';
+require_once __DIR__ . '/services/authService.php';
 
-require_once __DIR__ . 'rest/routes/usersRoute.php';
-require_once __DIR__ . 'rest/routes/categoriesRoute.php';
-require_once __DIR__ . 'rest/routes/claimRequestsRoute.php';
-require_once __DIR__ . 'rest/routes/foundItemsRoute.php';
-require_once __DIR__ . 'rest/routes/lostItemsRoute.php';
-require_once __DIR__ . 'rest/routes/authRoute.php';
+require_once __DIR__ . '/routes/usersRoute.php';
+require_once __DIR__ . '/routes/categoriesRoute.php';
+require_once __DIR__ . '/routes/claimRequestsRoute.php';
+require_once __DIR__ . '/routes/foundItemsRoute.php';
+require_once __DIR__ . '/routes/lostItemsRoute.php';
+require_once __DIR__ . '/routes/authRoute.php';
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
