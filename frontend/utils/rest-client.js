@@ -4,7 +4,7 @@ let Constants = {
             if(location.hostname == 'localhost'){
                 return 'backend/'
             } else {
-                return 'https://shark-app-5hzgo.ondigitalocean.app//backend/'
+                return 'https://shark-app-5hzgo.ondigitalocean.app/backend/'
             }
 
     },
