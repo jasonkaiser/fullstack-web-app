@@ -1,5 +1,14 @@
 let Constants = {
-    PROJECT_BASE_URL: "backend/", // Relative path since you're using 'backend/' in your requests
+    get_api_base_url: function(){
+
+            if(location.hostname == 'localhost'){
+                return 'backend/'
+            } else {
+                return 'https://shark-app-5hzgo.ondigitalocean.app//backend/'
+            }
+
+    },
+    // PROJECT_BASE_URL: "backend/", // Relative path since you're using 'backend/' in your requests
     USER_ROLE: "User",
     ADMIN_ROLE: "Admin"
 };
@@ -7,7 +16,7 @@ let Constants = {
 let RestClient = {
     get: function(url, callback, error_callback) {
         $.ajax({
-            url: Constants.PROJECT_BASE_URL + url,
+            url: Constants.get_api_base_url() + url,
             type: "GET",
             beforeSend: function(xhr) {
                 const token = localStorage.getItem("jwt_token");
@@ -30,7 +39,7 @@ let RestClient = {
 
     post: function(url, data, callback, error_callback) {
         $.ajax({
-            url: Constants.PROJECT_BASE_URL + url,
+            url: Constants.get_api_base_url() + url,
             type: "POST",
             contentType: "application/json",
             data: JSON.stringify(data),
@@ -49,7 +58,7 @@ let RestClient = {
 
     put: function(url, data, callback, error_callback) {
         $.ajax({
-            url: Constants.PROJECT_BASE_URL + url,
+            url: Constants.get_api_base_url() + url,
             type: "PUT",
             contentType: "application/json",
             data: JSON.stringify(data),
@@ -74,7 +83,7 @@ let RestClient = {
 
     delete: function(url, callback, error_callback) {
         $.ajax({
-            url: Constants.PROJECT_BASE_URL + url,
+            url: Constants.get_api_base_url() + url,
             type: "DELETE",
             beforeSend: function(xhr) {
                 const token = localStorage.getItem("jwt_token");
