@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/../../../vendor/autoload.php';
+require __DIR__ . '/../../../rest/vendor/autoload.php';
 
 define('LOCALSERVER', 'http://localhost/fullstack-web-app/backend/rest');
 define('PRODSERVER', 'https://lost-and-found-76z94.ondigitalocean.app/backend/rest');

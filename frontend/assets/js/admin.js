@@ -385,4 +385,26 @@ $(document).ready(function () {
             Toast.error("Failed to load found items. Check your permissions.");
         });
     }
+
+   
+    const modalIds = [
+    '#viewProfileModal',
+    '#editUserModal',
+    '#viewLostItemModal',
+    '#editLostItemModal',
+    '#viewFoundItemModal',
+    '#editFoundItemModal'
+    ];
+
+    modalIds.forEach(modalId => {
+    $(modalId).on('hidden.bs.modal', function () {
+      
+        $(this).find('form')[0]?.reset();
+
+   
+        $('.modal-backdrop').remove();
+        $('body').removeClass('modal-open').css('padding-right', '');
+    });
+    });
+
 });

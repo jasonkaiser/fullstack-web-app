@@ -168,6 +168,15 @@ $(document).ready(function () {
         $('#profileForm')[0].reset();
     });
 
+    $('#editProfileModal').on('hidden.bs.modal', function () {
+    $('#profileForm')[0].reset();
+
+  
+    $('.modal-backdrop').remove();
+    $('body').removeClass('modal-open').css('padding-right', '');
+    });
+
+
     loadProfileData();
     loadUserReports();
 });

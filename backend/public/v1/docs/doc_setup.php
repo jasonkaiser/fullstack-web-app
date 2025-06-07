@@ -21,6 +21,6 @@
  *     securityScheme="ApiKey",
  *     type="apiKey",
  *     in="header",
- *     name="Authorization"
+ *     name="Authentication"
  * )
  */
