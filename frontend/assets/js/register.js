@@ -85,3 +85,6 @@ $(document).ready(function() {
         $(`#${fieldId}`).after(`<div class="error-text text-danger small mt-1">${message}</div>`);
     }
 });
+
+
+// 
