@@ -18,7 +18,7 @@ let RestClient = {
             beforeSend: function(xhr) {
                 const token = localStorage.getItem("jwt_token");
                 if (token) {
-                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                    xhr.setRequestHeader("Authentication", "Bearer " + token);
                 }
             },
             success: function(response) {
@@ -62,7 +62,7 @@ let RestClient = {
             beforeSend: function(xhr) {
                 const token = localStorage.getItem("jwt_token");
                 if (token) {
-                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                    xhr.setRequestHeader("Authentication", "Bearer " + token);
                 }
             },
             success: function(response) {
@@ -85,7 +85,7 @@ let RestClient = {
             beforeSend: function(xhr) {
                 const token = localStorage.getItem("jwt_token");
                 if (token) {
-                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                    xhr.setRequestHeader("Authentication", "Bearer " + token);
                 }
             },
             success: function(response) {

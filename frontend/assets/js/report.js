@@ -176,7 +176,7 @@ function initReportPage() {
       function (error) {
         Toast.error('Failed to submit report: ' + (error.error || error.message || 'Unknown error'));
       },
-      { Authorization: 'Bearer ' + token }
+      { Authentication: 'Bearer ' + token }
     );
   });
 }

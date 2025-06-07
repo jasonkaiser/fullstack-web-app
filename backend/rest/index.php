@@ -40,28 +40,12 @@ ini_set('display_startup_errors', 1);
 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
-header("Access-Control-Expose-Headers: Authorization");
+header("Access-Control-Allow-Headers: Content-Type, Authentication, Authorization, X-Requested-With");
+header("Access-Control-Expose-Headers: Authentication");
 header("Access-Control-Max-Age: 3600");
 
-// Handle preflight requests
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    exit(0);
-}
 
-
-
-
-if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
-    $authHeader = $_SERVER['HTTP_AUTHORIZATION'];
-} elseif (isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
-    $authHeader = $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
-} elseif (function_exists('apache_request_headers')) {
-    $headers = apache_request_headers();
-    $authHeader = isset($headers['Authorization']) ? $headers['Authorization'] : null;
-}
-
-$token = Flight::request()->getHeader("Authorization");
+$token = Flight::request()->getHeader("Authentication");
 if (empty($token) && isset($authHeader)) {
     $token = $authHeader;
 }
@@ -83,7 +67,7 @@ Flight::route('/*', function() {
         return TRUE;
     } else {
         try {
-            $token = Flight::request()->getHeader("Authorization");
+            $token = Flight::request()->getHeader("Authentication");
             if($token && Flight::authMiddleware()->verifyToken($token))
                 return TRUE;
             else
